@@ -39,10 +39,10 @@ $ npm run test:cov
 * Adapter
 
   * EventBus
-  * Repository
+  * ~Repository~
 
 * Restful API
-* Database Read/Write Split
+* ~Database Read/Write Split~
 * IoC/DI
 * Logger
 
