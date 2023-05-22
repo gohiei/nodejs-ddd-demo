@@ -25,7 +25,7 @@ describe('Rename UseCase', () => {
   });
 
   describe('execute', () => {
-    it('should return ok', () => {
+    it('should return ok', async () => {
       const input: RenameUseCaseInput = {
         id: UUID.new().toString(),
         username: 'test2',
@@ -35,7 +35,7 @@ describe('Rename UseCase', () => {
       fn.mockReturnValueOnce(user);
 
       const uc = new RenameUseCase(repo, eb);
-      const output = uc.execute(input);
+      const output = await uc.execute(input);
 
       expect(output.result).toBe('ok');
       expect(output.ret).not.toBeNull();

@@ -14,11 +14,13 @@ export interface CreateUserUseCaseOutput extends Output {
 }
 
 export class CreateUserUseCase extends UserUseCase {
-  execute(input: CreateUserUseCaseInput): CreateUserUseCaseOutput {
+  async execute(
+    input: CreateUserUseCaseInput,
+  ): Promise<CreateUserUseCaseOutput> {
     const user = User.create(input.username, input.password);
 
-    this.repo.add(user);
-    this.eventBus.postAll(user);
+    await this.repo.add(user);
+    await this.eventBus.postAll(user);
 
     const output: CreateUserUseCaseOutput = {
       result: 'ok',

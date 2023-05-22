@@ -13,12 +13,13 @@ export interface RenameUseCaseOutput extends Output {
 }
 
 export class RenameUseCase extends UserUseCase {
-  execute(input: RenameUseCaseInput): RenameUseCaseOutput {
-    const user = this.repo.getByID(input.id);
+  async execute(input: RenameUseCaseInput): Promise<RenameUseCaseOutput> {
+    const user = await this.repo.getByID(input.id);
 
     user.rename(input.username);
 
-    this.eventBus.postAll(user);
+    await this.repo.rename(user);
+    await this.eventBus.postAll(user);
 
     const output: RenameUseCaseOutput = {
       result: 'ok',

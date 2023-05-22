@@ -7,4 +7,8 @@ export abstract class AggregateRoot extends Entity {
   protected addDomainEvent(event: DomainEvent) {
     this.events.push(event);
   }
+
+  getDomainEvents(): DomainEvent[] {
+    return this.events;
+  }
 }
