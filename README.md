@@ -38,7 +38,7 @@ $ npm run test:cov
 
 * Adapter
 
-  * EventBus
+  * ~EventBus~
   * ~Repository~
 
 * Restful API
