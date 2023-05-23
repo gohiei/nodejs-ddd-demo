@@ -16,9 +16,11 @@ export class UserRenamedEvent extends DomainEvent {
   toJSON(): object {
     return {
       ...super.toJSON(),
-      user_id: this.userId,
-      old_username: this.oldUsername,
-      new_username: this.newUsername,
+      payload: {
+        user_id: this.userId,
+        old_username: this.oldUsername,
+        new_username: this.newUsername,
+      },
     };
   }
 }

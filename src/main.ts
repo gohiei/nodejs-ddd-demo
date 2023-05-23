@@ -16,14 +16,14 @@ import {
   RenameUseCase,
   RenameUseCaseInput,
 } from './user/usecase/rename.usecase';
+import { EventEmitter2EventBus } from './dddcore/adapter/event.emitter2.event.bus';
+import { NotifyManagerHandler } from './user/usecase/notify.manager.handler';
 
 async function main() {
-  console.log(process.env.USER_WRITE_DB_DSN);
-
   const ds = new DataSource({
     type: 'mysql',
     synchronize: false,
-    logging: true,
+    logging: false,
     entities: [UserModel],
     cache: true,
     replication: {
@@ -35,11 +35,12 @@ async function main() {
   await ds.initialize();
 
   const repo = new MySqlUserRepository(ds);
-  const eb = new FakeEventBus();
+  const eb = new EventEmitter2EventBus();
   const uc = new RenameUseCase(repo, eb);
+  const nm = new NotifyManagerHandler(eb);
 
   const input: RenameUseCaseInput = {
-    id: '4fcd1879-af20-4c62-a845-bf4c17ca98b9',
+    id: 'f7e41e07-c9cf-47bd-972f-64fec0882f20',
     username: 'chuck6',
   };
 

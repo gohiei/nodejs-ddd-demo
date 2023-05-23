@@ -16,9 +16,10 @@ export class UserCreatedEvent extends DomainEvent {
   toJSON(): object {
     return {
       ...super.toJSON(),
-      user_id: this.userId,
-      username: this.username,
-      password: this.password,
+      payload: {
+        user_id: this.userId,
+        username: this.username,
+      },
     };
   }
 }

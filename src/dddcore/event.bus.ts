@@ -12,5 +12,5 @@ export interface EventHandler {
   readonly name: string;
   readonly eventName: string;
 
-  when(eventName: string, message: Buffer): void;
+  when(eventName: string, message: DomainEvent): Promise<void>;
 }
