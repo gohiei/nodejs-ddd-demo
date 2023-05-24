@@ -36,12 +36,12 @@ $ npm run test:cov
 
 ## Todo
 
-* Adapter
+* ~Adapter~
 
   * ~EventBus~
   * ~Repository~
 
-* Restful API
+* ~Restful API~
 * ~Database Read/Write Split~
 * IoC/DI
 * Logger
