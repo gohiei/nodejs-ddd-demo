@@ -8,8 +8,8 @@ export interface RenameUseCaseInput extends Input {
 }
 
 export interface RenameUseCaseOutput extends Output {
-  readonly result: string;
-  readonly ret: UserDTO;
+  readonly id: string;
+  readonly username: string;
 }
 
 export class RenameUseCase extends UserUseCase {
@@ -21,11 +21,7 @@ export class RenameUseCase extends UserUseCase {
     await this.repo.rename(user);
     await this.eventBus.postAll(user);
 
-    const output: RenameUseCaseOutput = {
-      result: 'ok',
-      ret: UserDTOBuildFrom(user),
-    };
-
+    const output: RenameUseCaseOutput = UserDTOBuildFrom(user);
     return output;
   }
 }

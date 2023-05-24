@@ -1,7 +1,7 @@
 import { Input, Output } from '../../dddcore/usecase';
 import { UserUseCase } from './user.usecase';
 import { User } from '../entity/user';
-import { UserDTO, UserDTOBuildFrom } from './dto/user.dto';
+import { UserDTOBuildFrom } from './dto/user.dto';
 
 export interface CreateUserUseCaseInput extends Input {
   readonly username: string;
@@ -9,8 +9,8 @@ export interface CreateUserUseCaseInput extends Input {
 }
 
 export interface CreateUserUseCaseOutput extends Output {
-  readonly result: string;
-  readonly ret: UserDTO;
+  readonly id: string;
+  readonly username: string;
 }
 
 export class CreateUserUseCase extends UserUseCase {
@@ -22,11 +22,7 @@ export class CreateUserUseCase extends UserUseCase {
     await this.repo.add(user);
     await this.eventBus.postAll(user);
 
-    const output: CreateUserUseCaseOutput = {
-      result: 'ok',
-      ret: UserDTOBuildFrom(user),
-    };
-
+    const output: CreateUserUseCaseOutput = UserDTOBuildFrom(user);
     return output;
   }
 }

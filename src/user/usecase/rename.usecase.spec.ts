@@ -37,10 +37,9 @@ describe('Rename UseCase', () => {
       const uc = new RenameUseCase(repo, eb);
       const output = await uc.execute(input);
 
-      expect(output.result).toBe('ok');
-      expect(output.ret).not.toBeNull();
-      expect(output.ret.id).toBe(input.id);
-      expect(output.ret.username).toBe('test2');
+      expect(output).not.toBeNull();
+      expect(output.id).toBe(input.id);
+      expect(output.username).toBe('test2');
     });
   });
 });
