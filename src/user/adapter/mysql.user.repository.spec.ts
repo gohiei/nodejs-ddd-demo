@@ -11,7 +11,7 @@ describe('MySqlUserRepository', () => {
   beforeEach(async () => {
     datasource = new DataSource({
       type: 'sqlite',
-      database: ':memory',
+      database: ':memory:',
       entities: [UserModel],
       dropSchema: true,
       synchronize: true,
