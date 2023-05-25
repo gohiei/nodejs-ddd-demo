@@ -9,6 +9,7 @@ import { EVENT_BUS } from '../dddcore/dddcore.constant';
 import { EventEmitter2EventBus } from '../dddcore/adapter/event.emitter2.event.bus';
 import { CreateUserUseCase } from './usecase/create.user.usecase';
 import { RenameUseCase } from './usecase/rename.usecase';
+import { NotifyManagerHandler } from './usecase/handler/notify.manager.handler';
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([UserModel], 'default')],
@@ -24,6 +25,7 @@ import { RenameUseCase } from './usecase/rename.usecase';
     },
     CreateUserUseCase,
     RenameUseCase,
+    NotifyManagerHandler,
   ],
 })
 export class UserModule {}
