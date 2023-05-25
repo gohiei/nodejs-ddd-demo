@@ -17,6 +17,6 @@ export class UserModel {
   @Column({ comment: '最後異動時間' })
   updated_at: Date = new Date();
 
-  @Column({ comment: '刪除時間' })
+  @Column({ comment: '刪除時間', nullable: true })
   deleted_at: Date;
 }
