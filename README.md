@@ -43,7 +43,7 @@ $ npm run test:cov
 
 * ~Restful API~
 * ~Database Read/Write Split~
-* IoC/DI
+* ~IoC/DI~
 * Logger
 
 ## Read More
