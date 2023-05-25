@@ -15,7 +15,7 @@ export class RenameUserDto {
   readonly username: string = '';
 }
 
-@Controller('user')
+@Controller('/api/user')
 export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,

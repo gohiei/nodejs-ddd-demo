@@ -15,10 +15,10 @@ describe('UserController (e2e)', () => {
     await clearRepository([UserModel], 'default');
   });
 
-  describe('POST /user', () => {
+  describe('POST /api/user', () => {
     it('should return ok', () => {
       return request(app.getHttpServer())
-        .post('/user')
+        .post('/api/user')
         .send({
           username: 'test1',
           password: 'password1',
@@ -32,9 +32,9 @@ describe('UserController (e2e)', () => {
     });
   });
 
-  describe('PUT /user/:id', () => {
+  describe('PUT /api/user/:id', () => {
     it('should return ok', async () => {
-      const out = await request(app.getHttpServer()).post('/user').send({
+      const out = await request(app.getHttpServer()).post('/api/user').send({
         username: 'test1',
         password: 'password1',
       });
@@ -42,7 +42,7 @@ describe('UserController (e2e)', () => {
       const id = out.body.ret.id;
 
       return request(app.getHttpServer())
-        .put(`/user/${id}`)
+        .put(`/api/user/${id}`)
         .send({
           username: 'test2',
         })
