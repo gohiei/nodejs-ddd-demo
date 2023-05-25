@@ -3,14 +3,19 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from '../entity/user';
 import { ErrUserNotFound, UserRepository } from '../repository/user.repository';
 import { UserModel } from './model/user.model';
+import { Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
 
+@Injectable()
 export class MySqlUserRepository implements UserRepository {
-  private datasource: DataSource;
-  private userRepo: Repository<UserModel>;
+  private readonly userRepo: Repository<UserModel>;
 
-  constructor(ds: DataSource) {
-    this.datasource = ds;
-    this.userRepo = this.datasource.getRepository(UserModel);
+  constructor(
+    // @todo Datasource 可省略
+    @InjectDataSource('default')
+    private dataSource: DataSource,
+  ) {
+    this.userRepo = dataSource.getRepository(UserModel);
   }
 
   async getByID(id: string): Promise<User> {

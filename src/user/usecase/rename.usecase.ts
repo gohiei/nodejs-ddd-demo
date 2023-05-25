@@ -1,6 +1,7 @@
 import { Input, Output } from '../../dddcore/usecase';
 import { UserUseCase } from './user.usecase';
-import { UserDTOBuildFrom, UserDTO } from './dto/user.dto';
+import { UserDTOBuildFrom } from './dto/user.dto';
+import { Injectable } from '@nestjs/common';
 
 export interface RenameUseCaseInput extends Input {
   readonly id: string;
@@ -12,6 +13,7 @@ export interface RenameUseCaseOutput extends Output {
   readonly username: string;
 }
 
+@Injectable()
 export class RenameUseCase extends UserUseCase {
   async execute(input: RenameUseCaseInput): Promise<RenameUseCaseOutput> {
     const user = await this.repo.getByID(input.id);

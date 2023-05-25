@@ -4,10 +4,6 @@ import {
   CreateUserUseCase,
   CreateUserUseCaseInput,
 } from './usecase/create.user.usecase';
-import { DataSource } from 'typeorm';
-import { EventEmitter2EventBus } from '../dddcore/adapter/event.emitter2.event.bus';
-import { UserModel } from './adapter/model/user.model';
-import { MySqlUserRepository } from './adapter/mysql.user.repository';
 import { RenameUseCase, RenameUseCaseInput } from './usecase/rename.usecase';
 
 export class CreateUserDto {
@@ -21,32 +17,18 @@ export class RenameUserDto {
 
 @Controller('user')
 export class UserController {
+  constructor(
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly renameUseCase: RenameUseCase,
+  ) {}
+
   @Post()
   async createUser(@Body() body: CreateUserDto) {
-    const ds = new DataSource({
-      type: 'mysql',
-      synchronize: false,
-      logging: true,
-      entities: [UserModel],
-      cache: true,
-      replication: {
-        master: { url: process.env.USER_WRITE_DB_DSN },
-        slaves: [{ url: process.env.USER_READ_DB_DSN }],
-      },
-    });
-
-    await ds.initialize();
-
-    const repo = new MySqlUserRepository(ds);
-    const eb = new EventEmitter2EventBus();
-
-    const uc = new CreateUserUseCase(repo, eb);
-
     const input: CreateUserUseCaseInput = {
       ...body,
     };
 
-    const output = await uc.execute(input);
+    const output = await this.createUserUseCase.execute(input);
 
     return {
       result: 'ok',
@@ -56,31 +38,12 @@ export class UserController {
 
   @Put('/:id')
   async rename(@Param('id') id: string, @Body() body: RenameUserDto) {
-    const ds = new DataSource({
-      type: 'mysql',
-      synchronize: false,
-      logging: true,
-      entities: [UserModel],
-      cache: true,
-      replication: {
-        master: { url: process.env.USER_WRITE_DB_DSN },
-        slaves: [{ url: process.env.USER_READ_DB_DSN }],
-      },
-    });
-
-    await ds.initialize();
-
-    const repo = new MySqlUserRepository(ds);
-    const eb = new EventEmitter2EventBus();
-
-    const uc = new RenameUseCase(repo, eb);
-
     const input: RenameUseCaseInput = {
       id,
       username: body.username,
     };
 
-    const output = await uc.execute(input);
+    const output = await this.renameUseCase.execute(input);
 
     return {
       result: 'ok',

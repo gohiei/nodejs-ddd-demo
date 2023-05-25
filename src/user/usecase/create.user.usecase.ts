@@ -2,6 +2,7 @@ import { Input, Output } from '../../dddcore/usecase';
 import { UserUseCase } from './user.usecase';
 import { User } from '../entity/user';
 import { UserDTOBuildFrom } from './dto/user.dto';
+import { Injectable } from '@nestjs/common';
 
 export interface CreateUserUseCaseInput extends Input {
   readonly username: string;
@@ -13,6 +14,7 @@ export interface CreateUserUseCaseOutput extends Output {
   readonly username: string;
 }
 
+@Injectable()
 export class CreateUserUseCase extends UserUseCase {
   async execute(
     input: CreateUserUseCaseInput,

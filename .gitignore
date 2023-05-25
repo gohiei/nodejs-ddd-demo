@@ -1,5 +1,6 @@
 # Config
 .env
+config/default.ts
 
 # compiled output
 /dist
