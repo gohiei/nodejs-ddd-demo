@@ -19,7 +19,7 @@ export class CreateUserUseCase extends UserUseCase {
   async execute(
     input: CreateUserUseCaseInput,
   ): Promise<CreateUserUseCaseOutput> {
-    const user = User.create(input.username, input.password);
+    const user = await User.create(input.username, input.password);
 
     await this.repo.add(user);
     await this.eventBus.postAll(user);

@@ -10,9 +10,20 @@ import { EventEmitter2EventBus } from '../dddcore/adapter/event.emitter2.event.b
 import { CreateUserUseCase } from './usecase/create.user.usecase';
 import { RenameUseCase } from './usecase/rename.usecase';
 import { NotifyManagerHandler } from './usecase/handler/notify.manager.handler';
+import { UserPasswordModel } from './adapter/model/user.password.model';
+import { PastUserPasswordModel } from './adapter/model/past.user.password.model';
+import { ChangePasswordUseCase } from './usecase/change.password.usecase';
+import { CheckIfARiskFulUser } from './usecase/handler/check-if-a-riskful-user.handler';
+import { ClearUserCache } from './usecase/handler/clear-user-cache.handler';
 
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forFeature([UserModel], 'default')],
+  imports: [
+    ConfigModule,
+    TypeOrmModule.forFeature(
+      [UserModel, UserPasswordModel, PastUserPasswordModel],
+      'default',
+    ),
+  ],
   controllers: [UserController],
   providers: [
     {
@@ -25,7 +36,10 @@ import { NotifyManagerHandler } from './usecase/handler/notify.manager.handler';
     },
     CreateUserUseCase,
     RenameUseCase,
+    ChangePasswordUseCase,
     NotifyManagerHandler,
+    CheckIfARiskFulUser,
+    ClearUserCache,
   ],
 })
 export class UserModule {}

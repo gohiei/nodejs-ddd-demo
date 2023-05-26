@@ -5,6 +5,7 @@ import {
   clearRepository,
   getTestingModule,
 } from '../utility/create-testing-module';
+import { DateTime } from '../../src/dddcore/utility/datetime';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -54,6 +55,31 @@ describe('UserController (e2e)', () => {
               id,
               username: 'test2',
             },
+          });
+        });
+    });
+  });
+
+  describe('PUT /api/user/:id/password', () => {
+    it('should return ok', async () => {
+      const out = await request(app.getHttpServer()).post('/api/user').send({
+        username: 'test1',
+        password: 'password1',
+      });
+
+      const id = out.body.ret.id;
+
+      return request(app.getHttpServer())
+        .put(`/api/user/${id}/password`)
+        .send({
+          new_password: 'password2',
+          confirm_password: 'password2',
+          password_expire_at: new DateTime().add(10, 'day').format(),
+        })
+        .expect(HttpStatus.OK)
+        .then(({ body }) => {
+          expect(body).toMatchObject({
+            result: 'ok',
           });
         });
     });

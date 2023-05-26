@@ -14,6 +14,9 @@ describe('Rename UseCase', () => {
       getByID: fn,
       add: jest.fn(),
       rename: jest.fn(),
+      getPasswordByUser: jest.fn(),
+      getPastPasswordByUser: jest.fn(),
+      changePassword: jest.fn(),
     };
 
     eb = {

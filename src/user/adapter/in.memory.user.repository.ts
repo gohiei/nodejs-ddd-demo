@@ -1,4 +1,6 @@
+import { PastUserPassword } from '../entity/past.user.password';
 import { User } from '../entity/user';
+import { UserPassword } from '../entity/user.password';
 import {
   ErrFailedToAddUser,
   ErrFailedToRenameUser,
@@ -37,5 +39,17 @@ export class InMemoryUserRepository implements UserRepository {
     }
 
     this.users[id] = user;
+  }
+
+  async getPasswordByUser(user: User): Promise<UserPassword> {
+    return this.users.get(user.getID()).getUserPassword();
+  }
+
+  async getPastPasswordByUser(user: User): Promise<void | PastUserPassword> {
+    return this.users.get(user.getID()).getPastUserPassword();
+  }
+
+  async changePassword(user: User): Promise<void> {
+    this.users.set(user.getID(), user);
   }
 }

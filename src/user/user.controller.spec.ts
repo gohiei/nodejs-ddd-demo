@@ -3,10 +3,13 @@ import { UserController } from './user.controller';
 import { RenameUseCase } from './usecase/rename.usecase';
 import { CreateUserUseCase } from './usecase/create.user.usecase';
 import { UUID } from '../dddcore/uuid';
+import { ChangePasswordUseCase } from './usecase/change.password.usecase';
+import { DateTime } from '../dddcore/utility/datetime';
 
 describe('UserController', () => {
   const renameFn = jest.fn().mockResolvedValue([]);
   const createUserFn = jest.fn().mockResolvedValue([]);
+  const changePasswordFn = jest.fn().mockResolvedValue([]);
 
   let controller: UserController;
 
@@ -24,6 +27,12 @@ describe('UserController', () => {
           provide: RenameUseCase,
           useValue: {
             execute: renameFn,
+          },
+        },
+        {
+          provide: ChangePasswordUseCase,
+          useValue: {
+            execute: changePasswordFn,
           },
         },
       ],
@@ -74,6 +83,27 @@ describe('UserController', () => {
       expect(output.result).toBe('ok');
       expect(output.ret.id).toBe(id);
       expect(output.ret.username).toBe(username);
+    });
+  });
+
+  describe('change password', () => {
+    it('should return ok', async () => {
+      const id = '02418af3-33da-4a3a-a677-10f3f2920c3b';
+      const username = 'test2';
+
+      changePasswordFn.mockResolvedValue({
+        id,
+        username,
+      });
+
+      const output = await controller.changePassword(id, {
+        new_password: 'pw22',
+        confirm_password: 'pw22',
+        password_expire_at: new DateTime().add(10, 'day').toDate(),
+      });
+
+      expect(output).not.toBeNull();
+      expect(output.result).toBe('ok');
     });
   });
 });
