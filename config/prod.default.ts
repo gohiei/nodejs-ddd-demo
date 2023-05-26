@@ -1,5 +1,9 @@
+import * as path from 'path';
+
 export default () => ({
   deploy_env: 'prod',
+
+  log_dir: path.join(__dirname, '../logs'),
 
   mysql: {
     type: 'mysql',
