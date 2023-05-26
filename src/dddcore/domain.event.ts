@@ -1,4 +1,4 @@
-import { UUID } from './uuid';
+import { UUID } from './utility/uuid';
 
 export abstract class DomainEvent {
   private id: string;

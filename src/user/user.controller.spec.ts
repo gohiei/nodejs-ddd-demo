@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { RenameUseCase } from './usecase/rename.usecase';
 import { CreateUserUseCase } from './usecase/create.user.usecase';
-import { UUID } from '../dddcore/uuid';
+import { UUID } from '../dddcore/utility/uuid';
 import { ChangePasswordUseCase } from './usecase/change.password.usecase';
 import { DateTime } from '../dddcore/utility/datetime';
 
