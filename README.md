@@ -44,7 +44,8 @@ $ npm run test:cov
 * ~Restful API~
 * ~Database Read/Write Split~
 * ~IoC/DI~
-* Logger
+* ~Logger~
+* EventBus (nestjs)
 
 ## Read More
 
