@@ -5,8 +5,8 @@ import { LoggingMiddleware } from './logger.middleware';
 import { AccessLogger } from './usecase/access.logger';
 import { ErrorLogger } from './usecase/error.logger';
 import { PostLogger } from './usecase/post.logger';
-import { EventEmitter2EventBus } from '../dddcore/adapter/event.emitter2.event.bus';
-import { EVENT_BUS } from '../dddcore/dddcore.constant';
+import { EventEmitter2EventBus } from '@/dddcore/adapter/event.emitter2.event.bus';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 

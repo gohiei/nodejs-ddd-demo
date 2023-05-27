@@ -1,5 +1,5 @@
-import { Entity } from '../../dddcore/entity';
-import { CompareByBlowfish } from '../../dddcore/utility/crypto';
+import { Entity } from '@/dddcore/entity';
+import { CompareByBlowfish } from '@/dddcore/utility/crypto';
 import { User } from './user';
 
 export class PastUserPassword extends Entity {

@@ -1,6 +1,5 @@
-import { EventBus } from '../../dddcore/event.bus';
-import { DateTime } from '../../dddcore/utility/datetime';
-import { UUID } from '../../dddcore/utility/uuid';
+import { EventBus } from '@/dddcore/event.bus';
+import { DateTime } from '@/dddcore/utility/datetime';
 import { User } from '../entity/user';
 import { UserRepository } from './../repository/user.repository';
 import {

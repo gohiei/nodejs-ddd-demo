@@ -1,7 +1,7 @@
 import { MyResponse } from '../logger.constant';
 import { Request } from 'express';
 import { Stream } from 'stream';
-import { DomainEvent } from '../../dddcore/domain.event';
+import { DomainEvent } from '@/dddcore/domain.event';
 
 export class RequestDoneEvent extends DomainEvent {
   private readonly payload: any;

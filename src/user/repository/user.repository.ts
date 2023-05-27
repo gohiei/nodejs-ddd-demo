@@ -1,4 +1,4 @@
-import { Repository } from '../../dddcore/repository';
+import { Repository } from '@/dddcore/repository';
 import { PastUserPassword } from '../entity/past.user.password';
 import { User } from '../entity/user';
 import { UserPassword } from '../entity/user.password';

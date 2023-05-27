@@ -1,5 +1,5 @@
-import { EventBus } from '../../dddcore/event.bus';
-import { UUID } from '../../dddcore/utility/uuid';
+import { EventBus } from '@/dddcore/event.bus';
+import { UUID } from '@/dddcore/utility/uuid';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/user.repository';
 import { RenameUseCase, RenameUseCaseInput } from './rename.usecase';

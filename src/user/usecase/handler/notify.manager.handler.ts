@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DomainEvent } from '../../../dddcore/domain.event';
-import { EventBus, EventHandler } from '../../../dddcore/event.bus';
-import { EVENT_BUS } from '../../../dddcore/dddcore.constant';
+import { DomainEvent } from '@/dddcore/domain.event';
+import { EventBus, EventHandler } from '@/dddcore/event.bus';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 
 @Injectable()
 export class NotifyManagerHandler implements EventHandler {

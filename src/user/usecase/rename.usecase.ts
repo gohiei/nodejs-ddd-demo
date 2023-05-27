@@ -1,4 +1,4 @@
-import { Input, Output } from '../../dddcore/usecase';
+import { Input, Output } from '@/dddcore/usecase';
 import { UserUseCase } from './user.usecase';
 import { UserDTOBuildFrom } from './dto/user.dto';
 import { Injectable } from '@nestjs/common';

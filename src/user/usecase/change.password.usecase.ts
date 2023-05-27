@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Input, Output } from '../../dddcore/usecase';
+import { Input, Output } from '@/dddcore/usecase';
 import { UserUseCase } from './user.usecase';
 
 export abstract class ChangePasswordUseCaseInput implements Input {

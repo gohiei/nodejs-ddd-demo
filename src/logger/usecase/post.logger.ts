@@ -1,10 +1,10 @@
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import * as util from 'util';
-import { DateTime } from '../../dddcore/utility/datetime';
+import { DateTime } from '@/dddcore/utility/datetime';
 import { RequestDoneEvent } from '../events/request-done.event';
 import { POST_LOGGER } from '../logger.constant';
-import { EventBus, EventHandler } from '../../dddcore/event.bus';
-import { EVENT_BUS } from '../../dddcore/dddcore.constant';
+import { EventBus, EventHandler } from '@/dddcore/event.bus';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 
 @Injectable()
 export class PostLogger implements EventHandler {

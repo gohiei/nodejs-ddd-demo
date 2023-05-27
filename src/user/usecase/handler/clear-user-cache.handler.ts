@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { EVENT_BUS } from '../../../dddcore/dddcore.constant';
-import { DomainEvent } from '../../../dddcore/domain.event';
-import { EventBus, EventHandler } from '../../../dddcore/event.bus';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
+import { DomainEvent } from '@/dddcore/domain.event';
+import { EventBus, EventHandler } from '@/dddcore/event.bus';
 
 @Injectable()
 export class ClearUserCache implements EventHandler {

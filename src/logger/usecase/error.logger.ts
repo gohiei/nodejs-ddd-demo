@@ -3,7 +3,7 @@ import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Request } from 'express';
 import * as util from 'util';
 import { ERROR_LOGGER } from '../logger.constant';
-import { DateTime } from '../../dddcore/utility/datetime';
+import { DateTime } from '@/dddcore/utility/datetime';
 
 @Injectable()
 export class ErrorLogger {

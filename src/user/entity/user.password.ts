@@ -1,10 +1,10 @@
-import { Entity } from '../../dddcore/entity';
+import { Entity } from '@/dddcore/entity';
 import {
   CompareByBlowfish,
   EncodeByAES128ECB,
   HashByBlowfish,
-} from '../../dddcore/utility/crypto';
-import { DateTime } from '../../dddcore/utility/datetime';
+} from '@/dddcore/utility/crypto';
+import { DateTime } from '@/dddcore/utility/datetime';
 import { User } from './user';
 
 export type UserPasswordBuildOptions = {

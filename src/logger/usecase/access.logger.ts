@@ -1,8 +1,8 @@
 import * as util from 'util';
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
-import { EventBus, EventHandler } from '../../dddcore/event.bus';
-import { EVENT_BUS } from '../../dddcore/dddcore.constant';
-import { DateTime } from '../../dddcore/utility/datetime';
+import { EventBus, EventHandler } from '@/dddcore/event.bus';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
+import { DateTime } from '@/dddcore/utility/datetime';
 import { ACCESS_LOGGER } from '../logger.constant';
 import { RequestDoneEvent } from '../events/request-done.event';
 

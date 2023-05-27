@@ -1,6 +1,6 @@
 import { DataSource, Repository, UpdateResult } from 'typeorm';
 import { MySqlUserRepository } from './mysql.user.repository';
-import { UUID } from '../../dddcore/utility/uuid';
+import { UUID } from '@/dddcore/utility/uuid';
 import { User } from '../entity/user';
 import { UserModel } from './model/user.model';
 import { UserPasswordModel } from './model/user.password.model';

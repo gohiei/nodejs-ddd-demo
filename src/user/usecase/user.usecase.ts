@@ -1,8 +1,8 @@
-import { Input, Output, UseCase } from '../../dddcore/usecase';
-import { EventBus } from '../../dddcore/event.bus';
+import { Input, Output, UseCase } from '@/dddcore/usecase';
+import { EventBus } from '@/dddcore/event.bus';
 import { UserRepository } from '../repository/user.repository';
 import { Inject, Injectable } from '@nestjs/common';
-import { EVENT_BUS } from '../../dddcore/dddcore.constant';
+import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 import { USER_REPOSITORY } from '../user.constant';
 
 @Injectable()
