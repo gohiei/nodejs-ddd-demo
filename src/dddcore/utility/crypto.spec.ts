@@ -12,7 +12,6 @@ describe('crypto', () => {
       const hash = await HashByBlowfish(data);
 
       expect(hash).not.toBeNull();
-      console.log(hash);
 
       const retTrue = await CompareByBlowfish(data, hash);
       expect(retTrue).toBeTruthy();
