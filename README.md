@@ -24,14 +24,20 @@ $ npm run start:prod
 ## Test
 
 ```bash
-# unit tests
+# unit tests + e2e tests
 $ npm run test
+
+# unit tests
+$ npm run test:unit
 
 # e2e tests
 $ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# test coverage (unit tests)
+$ npm run test:unit:cov
+
+# test coverage (e2e tests)
+$ npm run test:e2e:cov
 ```
 
 ## Todo
