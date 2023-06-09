@@ -10,6 +10,10 @@ export class UserPasswordChangedEvent extends DomainEvent {
     this.userId = userId;
   }
 
+  getUserId(): string {
+    return this.userId;
+  }
+
   toJSON(): object {
     return {
       ...super.toJSON(),

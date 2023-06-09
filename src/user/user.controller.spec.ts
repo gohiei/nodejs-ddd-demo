@@ -5,11 +5,13 @@ import { CreateUserUseCase } from './usecase/create.user.usecase';
 import { UUID } from '@/dddcore/utility/uuid';
 import { ChangePasswordUseCase } from './usecase/change.password.usecase';
 import { DateTime } from '@/dddcore/utility/datetime';
+import { CheckIfARiskfulUserUseCase } from './usecase/handler/check-if-a-riskful-user.handler';
 
 describe('UserController', () => {
   const renameFn = jest.fn().mockResolvedValue([]);
   const createUserFn = jest.fn().mockResolvedValue([]);
   const changePasswordFn = jest.fn().mockResolvedValue([]);
+  const checkRiskfulFn = jest.fn().mockResolvedValue([]);
 
   let controller: UserController;
 
@@ -33,6 +35,12 @@ describe('UserController', () => {
           provide: ChangePasswordUseCase,
           useValue: {
             execute: changePasswordFn,
+          },
+        },
+        {
+          provide: CheckIfARiskfulUserUseCase,
+          useValue: {
+            execute: checkRiskfulFn,
           },
         },
       ],

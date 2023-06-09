@@ -13,7 +13,7 @@ import { NotifyManagerHandler } from './usecase/handler/notify.manager.handler';
 import { UserPasswordModel } from './adapter/model/user.password.model';
 import { PastUserPasswordModel } from './adapter/model/past.user.password.model';
 import { ChangePasswordUseCase } from './usecase/change.password.usecase';
-import { CheckIfARiskFulUser } from './usecase/handler/check-if-a-riskful-user.handler';
+import { CheckIfARiskfulUserUseCase } from './usecase/handler/check-if-a-riskful-user.handler';
 import { ClearUserCache } from './usecase/handler/clear-user-cache.handler';
 
 @Module({
@@ -38,7 +38,7 @@ import { ClearUserCache } from './usecase/handler/clear-user-cache.handler';
     RenameUseCase,
     ChangePasswordUseCase,
     NotifyManagerHandler,
-    CheckIfARiskFulUser,
+    CheckIfARiskfulUserUseCase,
     ClearUserCache,
   ],
 })

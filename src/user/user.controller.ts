@@ -9,6 +9,10 @@ import {
   ChangePasswordUseCase,
   ChangePasswordUseCaseInput,
 } from './usecase/change.password.usecase';
+import {
+  CheckIfARiskfulUserUseCase,
+  CheckIfARiskfulUserUseCaseInput,
+} from './usecase/handler/check-if-a-riskful-user.handler';
 
 export class CreateUserDto {
   readonly username: string = '';
@@ -36,6 +40,7 @@ export class UserController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly renameUseCase: RenameUseCase,
     private readonly changePasswordUseCase: ChangePasswordUseCase,
+    private readonly checkIfARiskfulUserUseCase: CheckIfARiskfulUserUseCase,
   ) {}
 
   @Post()
@@ -85,6 +90,15 @@ export class UserController {
     };
 
     await this.changePasswordUseCase.execute(input);
+
+    return { result: 'ok' };
+  }
+
+  @Put('/:id/check/riskful')
+  async checkRiskful(@Param('id') id: string) {
+    const input: CheckIfARiskfulUserUseCaseInput = { id };
+
+    await this.checkIfARiskfulUserUseCase.execute(input);
 
     return { result: 'ok' };
   }
