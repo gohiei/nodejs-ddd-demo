@@ -6,7 +6,7 @@ export class Exception extends Error {
   detail: string;
   previous: Error;
 
-  constructor(msg: string) {
+  private constructor(msg: string) {
     super(msg);
   }
 
