@@ -1,12 +1,8 @@
+import { Exception } from '@/dddcore/error';
 import { PastUserPassword } from '../entity/past.user.password';
 import { User } from '../entity/user';
 import { UserPassword } from '../entity/user.password';
-import {
-  ErrFailedToAddUser,
-  ErrFailedToRenameUser,
-  ErrUserNotFound,
-  UserRepository,
-} from '../repository/user.repository';
+import { UserRepository } from '../repository/user.repository';
 
 export class InMemoryUserRepository implements UserRepository {
   private users: Map<string, User> = new Map();
@@ -15,7 +11,7 @@ export class InMemoryUserRepository implements UserRepository {
     const user = this.users.get(id);
 
     if (!user) {
-      throw ErrUserNotFound;
+      throw Exception.New('10003', 'user not found');
     }
 
     return Promise.resolve(user);
@@ -25,7 +21,7 @@ export class InMemoryUserRepository implements UserRepository {
     const id = user.getID();
 
     if (this.users.has(id)) {
-      throw ErrFailedToAddUser;
+      throw Exception.New('10004', 'duplicate user id');
     }
 
     this.users.set(id, user);
@@ -35,7 +31,7 @@ export class InMemoryUserRepository implements UserRepository {
     const id = user.getID();
 
     if (!this.users.has(id)) {
-      throw ErrFailedToRenameUser;
+      throw Exception.New('10005', 'user not found');
     }
 
     this.users[id] = user;

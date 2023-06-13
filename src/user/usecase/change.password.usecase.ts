@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Input, Output } from '@/dddcore/usecase';
 import { UserUseCase } from './user.usecase';
+import { Exception } from '@/dddcore/error';
 
 export abstract class ChangePasswordUseCaseInput implements Input {
   readonly id: string;
@@ -34,14 +35,20 @@ export class ChangePasswordUseCase extends UserUseCase {
     } = input;
 
     if (newPassword !== confirmPassword) {
-      throw new Error('New password and confirm password are differenet');
+      throw Exception.New(
+        '10006',
+        'New password and confirm password are differenet',
+      );
     }
 
     const user = await this.repo.getByID(input.id);
     const password = await this.repo.getPasswordByUser(user);
 
     if (password.isDisabled() && !input.isFail0821) {
-      throw new Error('DisabledPassword user cannot change password');
+      throw Exception.New(
+        '10007',
+        'DisabledPassword user cannot change password',
+      );
     }
 
     // 檢查舊密碼是否輸入正確
@@ -49,7 +56,7 @@ export class ChangePasswordUseCase extends UserUseCase {
       const valid = await password.isValidPassword(oldPassword);
 
       if (!valid) {
-        throw new Error('Old password is not corrent');
+        throw Exception.New('10008', 'Old password is not corrent');
       }
     }
 
@@ -57,7 +64,10 @@ export class ChangePasswordUseCase extends UserUseCase {
       const same = await password.isValidPassword(newPassword);
 
       if (same) {
-        throw new Error('New password cannot be the same as old password');
+        throw Exception.New(
+          '10009',
+          'New password cannot be the same as old password',
+        );
       }
     }
 
@@ -66,7 +76,10 @@ export class ChangePasswordUseCase extends UserUseCase {
     // @todo get entrance from sensitive logger
     if (!isApiDomain && user.isMember()) {
       if (await user.isUsedPassword(newPassword)) {
-        throw new Error('New password cannot be the same as old password');
+        throw Exception.New(
+          '10010',
+          'New password cannot be the same as old password',
+        );
       }
     }
 
