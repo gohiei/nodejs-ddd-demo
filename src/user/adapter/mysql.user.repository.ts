@@ -1,11 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
 
 import { User } from '../entity/user';
-import {
-  ErrUserNotFound,
-  ErrUserPasswordNotFound,
-  UserRepository,
-} from '../repository/user.repository';
+import { UserRepository } from '../repository/user.repository';
 import { UserModel } from './model/user.model';
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
@@ -13,6 +9,7 @@ import { UserPassword } from '../entity/user.password';
 import { UserPasswordModel } from './model/user.password.model';
 import { PastUserPasswordModel } from './model/past.user.password.model';
 import { PastUserPassword } from '../entity/past.user.password';
+import { Exception } from '@/dddcore/error';
 
 @Injectable()
 export class MySqlUserRepository implements UserRepository {
@@ -34,7 +31,7 @@ export class MySqlUserRepository implements UserRepository {
     const u = await this.userRepo.findOneBy({ id });
 
     if (!u) {
-      throw ErrUserNotFound;
+      throw Exception.New('10001', 'user not found');
     }
 
     return User.build(u.id, u.username, u.password);
@@ -76,7 +73,7 @@ export class MySqlUserRepository implements UserRepository {
     const up = await this.passwordRepo.findOneBy({ user_id: user.getID() });
 
     if (!up) {
-      throw ErrUserPasswordNotFound;
+      throw Exception.New('10002', 'user password not found');
     }
 
     user.buildUserPassword({

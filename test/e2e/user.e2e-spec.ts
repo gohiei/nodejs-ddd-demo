@@ -58,6 +58,23 @@ describe('UserController (e2e)', () => {
           });
         });
     });
+
+    it('should return error', async () => {
+      return request(app.getHttpServer())
+        .put(`/api/user/xxxx-yyy-zzz-dddd`)
+        .send({
+          username: 'test2',
+        })
+        .expect(HttpStatus.BAD_REQUEST)
+        .then(({ body }) => {
+          expect(body).toMatchObject({
+            http_status: 400,
+            result: 'error',
+            message: 'user not found',
+            code: '10001',
+          });
+        });
+    });
   });
 
   describe('PUT /api/user/:id/password', () => {

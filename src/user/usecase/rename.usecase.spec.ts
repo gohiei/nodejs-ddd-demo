@@ -1,8 +1,10 @@
 import { EventBus } from '@/dddcore/event.bus';
 import { UUID } from '@/dddcore/utility/uuid';
+import { Exception } from '@/dddcore/error';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/user.repository';
 import { RenameUseCase, RenameUseCaseInput } from './rename.usecase';
+import { HttpStatus } from '@nestjs/common';
 
 describe('Rename UseCase', () => {
   let repo: UserRepository;
@@ -43,6 +45,22 @@ describe('Rename UseCase', () => {
       expect(output).not.toBeNull();
       expect(output.id).toBe(input.id);
       expect(output.username).toBe('test2');
+    });
+
+    it('should return `user not found`', () => {
+      const input: RenameUseCaseInput = {
+        id: UUID.new().toString(),
+        username: 'test2',
+      };
+
+      fn.mockRejectedValueOnce(Exception.New('10001', 'user not found'));
+
+      const uc = new RenameUseCase(repo, eb);
+      return uc.execute(input).catch((err) => {
+        expect(err.code).toBe('10001');
+        expect(err.message).toBe('user not found');
+        expect(err.statusCode).toBe(HttpStatus.BAD_REQUEST);
+      });
     });
   });
 });

@@ -6,6 +6,8 @@ import { UUID } from '@/dddcore/utility/uuid';
 import { ChangePasswordUseCase } from './usecase/change.password.usecase';
 import { DateTime } from '@/dddcore/utility/datetime';
 import { CheckIfARiskfulUserUseCase } from './usecase/handler/check-if-a-riskful-user.handler';
+import { Exception } from '../dddcore/error';
+import { HttpStatus } from '@nestjs/common';
 
 describe('UserController', () => {
   const renameFn = jest.fn().mockResolvedValue([]);
@@ -112,6 +114,26 @@ describe('UserController', () => {
 
       expect(output).not.toBeNull();
       expect(output.result).toBe('ok');
+    });
+
+    it('should return error', () => {
+      const id = '02418af3-33da-4a3a-a677-10f3f2920c3b';
+
+      changePasswordFn.mockRejectedValue(
+        Exception.New('10001', 'user not found'),
+      );
+
+      return controller
+        .changePassword(id, {
+          new_password: 'pw22',
+          confirm_password: 'pw22',
+          password_expire_at: new DateTime().add(10, 'day').toDate(),
+        })
+        .catch((err) => {
+          expect(err.code).toBe('10001');
+          expect(err.message).toBe('user not found');
+          expect(err.statusCode).toBe(HttpStatus.BAD_REQUEST);
+        });
     });
   });
 });
