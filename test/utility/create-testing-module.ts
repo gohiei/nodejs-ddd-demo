@@ -2,22 +2,18 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken, getDataSourceToken } from '@nestjs/typeorm';
-import { AppModule } from '../../src/app.module';
 import { getRedisToken } from '@liaoliaots/nestjs-redis';
 import type { Redis } from 'ioredis';
-import { redisMock } from 'ioredis-mock';
-import { ID_REDIS_NAMESPACE } from '../../src/user/user.constant';
+import { AppModule } from '@/app.module';
+
+jest.mock('ioredis');
 
 let app: INestApplication;
 
 export async function createTestingModule() {
-  const builder = Test.createTestingModule({
+  const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule, ConfigModule],
-  })
-    .overrideProvider(getRedisToken(ID_REDIS_NAMESPACE))
-    .useClass(redisMock);
-
-  const moduleFixture: TestingModule = await builder.compile();
+  }).compile();
 
   app = moduleFixture.createNestApplication();
   await app.init();

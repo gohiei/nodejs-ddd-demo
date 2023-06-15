@@ -11,10 +11,6 @@ const createRootAsync = (namespace) => {
     useFactory: (config: ConfigService) => {
       const redisConfig = config.get(`redis.${namespace}`);
 
-      if (isTest) {
-        redisConfig.url = 'redis://127.0.0.1:6379/10';
-      }
-
       return {
         closeClient: true,
         readyLog: true,
@@ -31,10 +27,6 @@ const createClusterRootAsync = (namespace) => {
     inject: [ConfigService],
     useFactory: (config: ConfigService) => {
       const redisConfig = config.get(`redis.${namespace}`);
-
-      if (isTest) {
-        redisConfig.url = 'redis://127.0.0.1:6379/10';
-      }
 
       return {
         closeClient: true,
