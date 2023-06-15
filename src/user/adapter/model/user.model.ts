@@ -11,6 +11,9 @@ export class UserModel {
   @Column({ comment: '密碼' })
   password: string;
 
+  @Column({ comment: '帳號編號(int)', name: 'user_id' })
+  userIntID: number;
+
   @Column({ comment: '建立時間' })
   created_at: Date = new Date();
 

@@ -3,7 +3,7 @@ import { UserController } from './user.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModel } from './adapter/model/user.model';
-import { USER_REPOSITORY } from './user.constant';
+import { ID_REPOSITORY, USER_REPOSITORY } from './user.constant';
 import { MySqlUserRepository } from './adapter/mysql.user.repository';
 import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 import { EventEmitter2EventBus } from '@/dddcore/adapter/event.emitter2.event.bus';
@@ -15,6 +15,7 @@ import { PastUserPasswordModel } from './adapter/model/past.user.password.model'
 import { ChangePasswordUseCase } from './usecase/change.password.usecase';
 import { CheckIfARiskfulUserUseCase } from './usecase/handler/check-if-a-riskful-user.handler';
 import { ClearUserCache } from './usecase/handler/clear-user-cache.handler';
+import { RedisIDRepository } from './adapter/redis.id.repository';
 
 @Module({
   imports: [
@@ -33,6 +34,10 @@ import { ClearUserCache } from './usecase/handler/clear-user-cache.handler';
     {
       provide: EVENT_BUS,
       useClass: EventEmitter2EventBus,
+    },
+    {
+      provide: ID_REPOSITORY,
+      useClass: RedisIDRepository,
     },
     CreateUserUseCase,
     RenameUseCase,

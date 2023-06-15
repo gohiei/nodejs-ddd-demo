@@ -3,9 +3,11 @@ import { PastUserPassword } from '../entity/past.user.password';
 import { User } from '../entity/user';
 import { UserPassword } from '../entity/user.password';
 import { UserRepository } from '../repository/user.repository';
+import { IdRepository } from '../repository/id.repository';
 
-export class InMemoryUserRepository implements UserRepository {
+export class InMemoryUserRepository implements UserRepository, IdRepository {
   private users: Map<string, User> = new Map();
+  private userID = 0;
 
   async getByID(id: string): Promise<User> {
     const user = this.users.get(id);
@@ -47,5 +49,10 @@ export class InMemoryUserRepository implements UserRepository {
 
   async changePassword(user: User): Promise<void> {
     this.users.set(user.getID(), user);
+  }
+
+  async incr(step = 1): Promise<number> {
+    this.userID = this.userID + step;
+    return this.userID;
   }
 }

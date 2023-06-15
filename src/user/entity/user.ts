@@ -13,6 +13,7 @@ type UserOptions = {
   username: string;
   password: string;
   role?: UserRole;
+  userID?: number;
 };
 
 export enum UserRole {
@@ -22,6 +23,7 @@ export enum UserRole {
 
 export class User extends AggregateRoot {
   private id: UserID;
+  private userID: number;
   private username: string;
   private password: string;
   private role: UserRole = UserRole.Member;
@@ -30,6 +32,7 @@ export class User extends AggregateRoot {
 
   private constructor({
     id,
+    userID,
     username,
     password,
     role = UserRole.Member,
@@ -40,27 +43,36 @@ export class User extends AggregateRoot {
     this.username = username;
     this.password = password;
     this.role = role;
+    this.userID = userID;
   }
 
-  static async create(username: string, password: string): Promise<User> {
-    const user = new User({ username, password });
+  static async create(
+    username: string,
+    password: string,
+    userID = 0,
+  ): Promise<User> {
+    const user = new User({ username, password, userID });
 
     user.userPassword = new UserPassword(user);
     await user.userPassword.changePassword(password, false);
 
     user.addDomainEvent(
-      new UserCreatedEvent(user.id.toString(), username, password),
+      new UserCreatedEvent(user.id.toString(), username, password, userID),
     );
 
     return user;
   }
 
-  static build(id: string, username: string, password: string): User {
-    return new User({ id, username, password });
+  static build(options: UserOptions): User {
+    return new User(options);
   }
 
   getID(): string {
     return this.id.toString();
+  }
+
+  getUserID(): number {
+    return this.userID;
   }
 
   getUsername(): string {

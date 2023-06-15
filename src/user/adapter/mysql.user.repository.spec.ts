@@ -33,6 +33,7 @@ describe('MySqlUserRepository', () => {
       u.id = UUID.new().toString();
       u.username = 'test1';
       u.password = 'password1';
+      u.userIntID = 123;
 
       const fn = jest.spyOn(userRepo, 'findOneBy').mockResolvedValue(u);
 
@@ -42,6 +43,7 @@ describe('MySqlUserRepository', () => {
       expect(user.getID()).toBe(u.id);
       expect(user.getUsername()).toBe(u.username);
       expect(user.getPassword()).toBe(u.password);
+      expect(user.getUserID()).toBe(u.userIntID);
 
       expect(fn).toBeCalledTimes(1);
     });
@@ -72,7 +74,11 @@ describe('MySqlUserRepository', () => {
       const fn = jest.spyOn(userRepo, 'update').mockResolvedValue(result);
       const repo = new MySqlUserRepository(datasource);
 
-      const user = User.build(UUID.new().toString(), 'test5', 'password3');
+      const user = User.build({
+        id: UUID.new().toString(),
+        username: 'test5',
+        password: 'password3',
+      });
       await repo.rename(user);
 
       expect(fn).toBeCalledTimes(1);

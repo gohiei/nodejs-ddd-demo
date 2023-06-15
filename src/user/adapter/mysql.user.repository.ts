@@ -34,7 +34,12 @@ export class MySqlUserRepository implements UserRepository {
       throw Exception.New('10001', 'user not found');
     }
 
-    return User.build(u.id, u.username, u.password);
+    return User.build({
+      id: u.id,
+      username: u.username,
+      password: u.password,
+      userID: u.userIntID,
+    });
   }
 
   async add(user: User): Promise<void> {
@@ -42,6 +47,7 @@ export class MySqlUserRepository implements UserRepository {
       id: user.getID(),
       username: user.getUsername(),
       password: user.getPassword(),
+      userIntID: user.getUserID(),
     });
 
     const pw = user.getUserPassword();

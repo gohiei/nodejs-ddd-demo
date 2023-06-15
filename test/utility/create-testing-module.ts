@@ -2,7 +2,11 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken, getDataSourceToken } from '@nestjs/typeorm';
-import { AppModule } from '../../src/app.module';
+import { getRedisToken } from '@liaoliaots/nestjs-redis';
+import type { Redis } from 'ioredis';
+import { AppModule } from '@/app.module';
+
+jest.mock('ioredis');
 
 let app: INestApplication;
 
@@ -56,4 +60,14 @@ export async function cleanUpDatabase() {
       await dataSource.destroy();
     }
   }
+
+  const redisConfig = config.get('redis');
+
+  Object.keys(redisConfig).forEach((name) => {
+    const { namespace } = redisConfig[name];
+    const token = getRedisToken(namespace);
+    const redis: Redis = app.get(token);
+
+    redis.disconnect();
+  });
 }

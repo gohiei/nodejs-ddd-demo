@@ -6,6 +6,9 @@ import {
   getTestingModule,
 } from '../utility/create-testing-module';
 import { DateTime } from '../../src/dddcore/utility/datetime';
+import { Redis } from 'ioredis';
+import { getRedisToken } from '@liaoliaots/nestjs-redis';
+import { ID_REDIS_NAMESPACE } from '../../src/user/user.constant';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -18,6 +21,9 @@ describe('UserController (e2e)', () => {
 
   describe('POST /api/user', () => {
     it('should return ok', () => {
+      const redis = app.get<Redis>(getRedisToken(ID_REDIS_NAMESPACE));
+      jest.spyOn(redis, 'incrby').mockResolvedValue(199);
+
       return request(app.getHttpServer())
         .post('/api/user')
         .send({
@@ -29,6 +35,7 @@ describe('UserController (e2e)', () => {
           expect(body.result).toBe('ok');
           expect(body.ret.id).toBeDefined();
           expect(body.ret.username).toBe('test1');
+          expect(body.ret.user_id).toBe(199);
         });
     });
   });
