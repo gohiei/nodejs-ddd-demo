@@ -4,13 +4,20 @@ export class UserCreatedEvent extends DomainEvent {
   private userId: string;
   private username: string;
   private password: string;
+  private userIntID: number;
 
-  constructor(userId: string, username: string, password: string) {
+  constructor(
+    userId: string,
+    username: string,
+    password: string,
+    userIntID: number,
+  ) {
     super('user.created');
 
     this.userId = userId;
     this.username = username;
     this.password = password;
+    this.userIntID = userIntID;
   }
 
   toJSON(): object {
@@ -19,6 +26,7 @@ export class UserCreatedEvent extends DomainEvent {
       payload: {
         user_id: this.userId,
         username: this.username,
+        user_int_id: this.userIntID,
       },
     };
   }

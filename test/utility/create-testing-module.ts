@@ -3,13 +3,21 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken, getDataSourceToken } from '@nestjs/typeorm';
 import { AppModule } from '../../src/app.module';
+import { getRedisToken } from '@liaoliaots/nestjs-redis';
+import type { Redis } from 'ioredis';
+import { redisMock } from 'ioredis-mock';
+import { ID_REDIS_NAMESPACE } from '../../src/user/user.constant';
 
 let app: INestApplication;
 
 export async function createTestingModule() {
-  const moduleFixture: TestingModule = await Test.createTestingModule({
+  const builder = Test.createTestingModule({
     imports: [AppModule, ConfigModule],
-  }).compile();
+  })
+    .overrideProvider(getRedisToken(ID_REDIS_NAMESPACE))
+    .useClass(redisMock);
+
+  const moduleFixture: TestingModule = await builder.compile();
 
   app = moduleFixture.createNestApplication();
   await app.init();
@@ -56,4 +64,14 @@ export async function cleanUpDatabase() {
       await dataSource.destroy();
     }
   }
+
+  const redisConfig = config.get('redis');
+
+  Object.keys(redisConfig).forEach((name) => {
+    const { namespace } = redisConfig[name];
+    const token = getRedisToken(namespace);
+    const redis: Redis = app.get(token);
+
+    redis.disconnect();
+  });
 }

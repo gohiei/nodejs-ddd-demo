@@ -36,7 +36,12 @@ describe('Rename UseCase', () => {
         username: 'test2',
       };
 
-      const user = User.build(input.id, 'test1', 'password1');
+      const user = User.build({
+        id: input.id,
+        username: 'test1',
+        password: 'password1',
+        userID: 123,
+      });
       fn.mockReturnValueOnce(user);
 
       const uc = new RenameUseCase(repo, eb);
