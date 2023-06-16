@@ -7,6 +7,7 @@ import {
 import { HttpAdapterHost } from '@nestjs/core';
 import { ErrorLogger } from '../usecase/error.logger';
 import { Exception } from '@/dddcore/error';
+import { Request } from 'express';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -18,6 +19,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const { httpAdapter } = this.httpAdapterHost;
+    const req = ctx.getRequest<Request>();
 
     const isException = exception instanceof Exception;
     const error = !isException ? (exception as Error) : undefined;
@@ -27,6 +29,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       result: 'error',
       message: '',
       code: '',
+      request_id: req.get('x-request-id'),
     };
 
     if (error) {

@@ -12,7 +12,7 @@ export class RequestDoneEvent extends DomainEvent {
     this.payload = {
       user_agent: req.get('user-agent') || '-',
       x_forwarded_for: req.get('x-forwarded-for') || '-',
-      request_id: req.get('requestId') || '-',
+      request_id: req.get('x-request-id') || '-',
       host: req.get('host') || '-',
       domain: req.get('domain') || '-',
       status_code: res.statusCode,

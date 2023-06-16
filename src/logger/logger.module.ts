@@ -7,8 +7,9 @@ import { ErrorLogger } from './usecase/error.logger';
 import { PostLogger } from './usecase/post.logger';
 import { EventEmitter2EventBus } from '@/dddcore/adapter/event.emitter2.event.bus';
 import { EVENT_BUS } from '@/dddcore/dddcore.constant';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { LoggerInterceptor } from './logger.interceptor';
 
 @Module({
   imports: [ConfigModule],
@@ -20,6 +21,10 @@ import { HttpExceptionFilter } from './filter/http-exception.filter';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggerInterceptor,
     },
     ...loggerProviders,
     AccessLogger,
