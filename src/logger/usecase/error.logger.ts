@@ -17,7 +17,7 @@ export class ErrorLogger {
     const req = ctx.getRequest<Request>();
 
     const { ip, method, originalUrl } = req;
-    const requestId = req.get('requestId') || '-';
+    const requestId = req.get('x-request-id') || '-';
     const host = req.get('host') || '-';
     const domain = req.get('domain') || '-';
 
