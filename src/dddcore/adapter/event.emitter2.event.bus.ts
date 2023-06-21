@@ -2,7 +2,9 @@ import { EventEmitter2 } from 'eventemitter2';
 import { AggregateRoot } from '../aggregate.root';
 import { DomainEvent } from '../domain.event';
 import { EventBus, EventHandler } from '../event.bus';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class EventEmitter2EventBus implements EventBus {
   private emitter: EventEmitter2;
 
