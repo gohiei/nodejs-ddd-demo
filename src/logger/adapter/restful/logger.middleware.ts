@@ -1,7 +1,7 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request } from 'express';
-import { MyResponse } from './logger.constant';
-import { RequestDoneEvent } from './events/request-done.event';
+import { MyResponse } from '../../logger.constant';
+import { RequestDoneEvent } from '../../entity/events/request-done.event';
 import { EventBus } from '@/dddcore/event.bus';
 import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 

@@ -4,7 +4,7 @@ import { EventBus, EventHandler } from '@/dddcore/event.bus';
 import { EVENT_BUS } from '@/dddcore/dddcore.constant';
 import { DateTime } from '@/dddcore/utility/datetime';
 import { ACCESS_LOGGER } from '../logger.constant';
-import { RequestDoneEvent } from '../events/request-done.event';
+import { RequestDoneEvent } from '../entity/events/request-done.event';
 
 @Injectable()
 export class AccessLogger implements EventHandler {

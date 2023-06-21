@@ -5,7 +5,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ErrorLogger } from '../usecase/error.logger';
+import { ErrorLogger } from '../../usecase/error.logger';
 import { Exception } from '@/dddcore/error';
 import { Request } from 'express';
 

@@ -3,7 +3,7 @@ import * as Winston from 'winston';
 import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import { ACCESS_LOGGER, POST_LOGGER, ERROR_LOGGER } from './logger.constant';
+import { ACCESS_LOGGER, POST_LOGGER, ERROR_LOGGER } from '../../logger.constant';
 
 const createFactory = (name) => async (config: ConfigService) => {
   const logDir = config.get('log_dir');

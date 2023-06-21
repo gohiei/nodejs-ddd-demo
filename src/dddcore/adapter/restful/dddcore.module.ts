@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { EVENT_BUS } from '../dddcore.constant';
-import { EventEmitter2EventBus } from './event.emitter2.event.bus';
+import { EVENT_BUS } from '../../dddcore.constant';
+import { EventEmitter2EventBus } from '../event.emitter2.event.bus';
 
 @Global()
 @Module({

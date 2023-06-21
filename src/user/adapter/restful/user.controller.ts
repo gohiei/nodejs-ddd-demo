@@ -3,16 +3,19 @@ import 'dotenv/config';
 import {
   CreateUserUseCase,
   CreateUserUseCaseInput,
-} from './usecase/create.user.usecase';
-import { RenameUseCase, RenameUseCaseInput } from './usecase/rename.usecase';
+} from '../../usecase/create.user.usecase';
+import {
+  RenameUseCase,
+  RenameUseCaseInput,
+} from '../../usecase/rename.usecase';
 import {
   ChangePasswordUseCase,
   ChangePasswordUseCaseInput,
-} from './usecase/change.password.usecase';
+} from '../../usecase/change.password.usecase';
 import {
   CheckIfARiskfulUserUseCase,
   CheckIfARiskfulUserUseCaseInput,
-} from './usecase/handler/check-if-a-riskful-user.handler';
+} from '../../usecase/handler/check-if-a-riskful-user.handler';
 
 export class CreateUserDto {
   readonly username: string = '';

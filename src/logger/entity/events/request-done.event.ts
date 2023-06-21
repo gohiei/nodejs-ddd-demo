@@ -1,4 +1,4 @@
-import { MyResponse } from '../logger.constant';
+import { MyResponse } from '../../logger.constant';
 import { Request } from 'express';
 import { Stream } from 'stream';
 import { DomainEvent } from '@/dddcore/domain.event';

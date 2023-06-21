@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
-import { RenameUseCase } from './usecase/rename.usecase';
-import { CreateUserUseCase } from './usecase/create.user.usecase';
-import { UUID } from '@/dddcore/utility/uuid';
-import { ChangePasswordUseCase } from './usecase/change.password.usecase';
-import { DateTime } from '@/dddcore/utility/datetime';
-import { CheckIfARiskfulUserUseCase } from './usecase/handler/check-if-a-riskful-user.handler';
-import { Exception } from '../dddcore/error';
 import { HttpStatus } from '@nestjs/common';
+import { Exception } from '@/dddcore/error';
+import { UUID } from '@/dddcore/utility/uuid';
+import { DateTime } from '@/dddcore/utility/datetime';
+
+import { UserController } from './user.controller';
+import { RenameUseCase } from '../../usecase/rename.usecase';
+import { CreateUserUseCase } from '../../usecase/create.user.usecase';
+import { ChangePasswordUseCase } from '../../usecase/change.password.usecase';
+import { CheckIfARiskfulUserUseCase } from '../../usecase/handler/check-if-a-riskful-user.handler';
 
 describe('UserController', () => {
   const renameFn = jest.fn().mockResolvedValue([]);
