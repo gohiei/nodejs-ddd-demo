@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { CreateDatabaseImports } from './infra/database.provider';
 import { CreateRedisImports } from './infra/redis.provider';
 import { LoggerModule } from './logger/logger.module';
+import { AuthModule } from './auth/adapter/restful/auth.module';
+import { DDDCoreModule } from './dddcore/adapter/dddcore.module';
 
 @Module({
   imports: [
@@ -14,8 +16,10 @@ import { LoggerModule } from './logger/logger.module';
     }),
     ...CreateDatabaseImports(),
     ...CreateRedisImports(),
-    UserModule,
+    DDDCoreModule,
     LoggerModule,
+    AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

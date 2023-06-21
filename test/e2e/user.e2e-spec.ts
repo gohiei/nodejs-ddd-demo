@@ -54,6 +54,10 @@ describe('UserController (e2e)', () => {
         .send({
           username: 'test2',
         })
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODYyMzkwMjIsImV4cCI6MTExNTQzMjgyNDJ9.xiUZiaKW1GtFNTt6bWJo0lv8ci2NijZgJQzGAxOTFXA',
+        )
         .expect(HttpStatus.OK)
         .then(({ body }) => {
           expect(body).toMatchObject({
@@ -72,6 +76,10 @@ describe('UserController (e2e)', () => {
         .send({
           username: 'test2',
         })
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODYyMzkwMjIsImV4cCI6MTExNTQzMjgyNDJ9.xiUZiaKW1GtFNTt6bWJo0lv8ci2NijZgJQzGAxOTFXA',
+        )
         .expect(HttpStatus.BAD_REQUEST)
         .then(({ body }) => {
           expect(body).toMatchObject({
@@ -100,6 +108,10 @@ describe('UserController (e2e)', () => {
           confirm_password: 'password2',
           password_expire_at: new DateTime().add(10, 'day').format(),
         })
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODYyMzkwMjIsImV4cCI6MTExNTQzMjgyNDJ9.xiUZiaKW1GtFNTt6bWJo0lv8ci2NijZgJQzGAxOTFXA',
+        )
         .expect(HttpStatus.OK)
         .then(({ body }) => {
           expect(body).toMatchObject({

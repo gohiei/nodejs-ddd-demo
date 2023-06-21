@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { AggregateRoot } from '../aggregate.root';
 import { DomainEvent } from '../domain.event';
 import { EventBus, EventHandler } from '../event.bus';
 
+@Injectable()
 export class FakeEventBus implements EventBus {
   post(event: DomainEvent): void {
     console.log(event.getName());
