@@ -1,8 +1,6 @@
 import { AggregateRoot } from '@/dddcore/aggregate.root';
 import { VerifyJwt } from '@/dddcore/utility/jwt';
-import { Exception } from '@/dddcore/error';
 import { InvalidRequestOccurredEvent } from './invalid_request_occurred.event';
-import { HttpStatus } from '@nestjs/common';
 
 type Request = {
   ip: string;
