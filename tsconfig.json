@@ -18,7 +18,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@/*": ["src/*"],
+      "@app/demo/*": ["apps/demo/src/*"],
+      "@lib/logger/*": ["libs/logger/src/*"],
+      "@lib/dddcore/*": ["libs/dddcore/src/*"],
+      "@config/*": ["config/*"]
     }
   }
 }

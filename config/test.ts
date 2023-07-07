@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { ID_REDIS_NAMESPACE } from '../src/user/user.constant';
+import { ID_REDIS_NAMESPACE } from '@app/demo/user/user.constant';
 
 export default () => ({
   deploy_env: 'local',
