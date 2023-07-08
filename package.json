@@ -8,17 +8,17 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/apps/demo/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
     "test:unit:cov": "jest --coverage",
     "test:unit:watch": "jest --watch",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "jest --config ./apps/demo/test/jest-e2e.json",
     "test:e2e:cov": "jest --config ./test/jest-e2e.json --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
@@ -74,7 +74,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -82,10 +82,17 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/../src/$1"
-    }
+      "^@app/demo(|/.*)$": "<rootDir>/apps/demo/src/$1",
+      "^@lib/logger(|/.*)$": "<rootDir>/libs/logger/src/$1",
+      "^@lib/dddcore(|/.*)$": "<rootDir>/libs/dddcore/src/$1",
+      "^@config/(.*)$": "<rootDir>/config/$1"
+    },
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ]
   }
 }
