@@ -24,6 +24,7 @@ export class RequestDoneEvent extends DomainEvent {
       request_body: req.body,
       response_data: res.__body_response,
       http_version: req.httpVersion,
+      full_path: `${req.method} ${req.route?.path}`,
     };
   }
 

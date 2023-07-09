@@ -27,7 +27,7 @@ export class AccessLogger implements EventHandler {
 
     this.write(
       util.format(
-        '%s %s "%s %s HTTP/%s" "%s" "%s" %s %s %s %s %s %s',
+        '%s %s "%s %s HTTP/%s" "%s" "%s" %s %s %s %s %s %s "%s"',
         new DateTime().format(),
         payload.ip,
         payload.method,
@@ -41,6 +41,7 @@ export class AccessLogger implements EventHandler {
         payload.domain,
         payload.host,
         payload.request_id,
+        payload.full_path,
       ),
     );
   }
