@@ -1,14 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Exception } from '@lib/dddcore/error';
 import { LoggerInterceptor } from './logger.interceptor';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
-import { Request, Response } from 'express';
 
 describe('LoggerInterceptor', () => {
   let service: LoggerInterceptor;
-  const executeFn = jest.fn();
-  const replyFn = jest.fn();
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [LoggerInterceptor],
