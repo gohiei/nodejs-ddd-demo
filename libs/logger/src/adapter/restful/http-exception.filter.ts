@@ -5,15 +5,18 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ErrorLogger } from '../../usecase/error.logger';
-import { Exception } from '@lib/dddcore/error';
 import { Request } from 'express';
+import { Exception } from '@lib/dddcore/error';
+import {
+  LogErrorUseCase,
+  LogErrorUseCaseInput,
+} from '../../usecase/log.error.usecase';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
-    private readonly errorLogger: ErrorLogger,
+    private readonly errorLogger: LogErrorUseCase,
   ) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
@@ -32,13 +35,27 @@ export class HttpExceptionFilter implements ExceptionFilter {
       request_id: req.get('x-request-id'),
     };
 
+    // Unexpected Error
     if (error) {
       responseBody.message = error.message;
       responseBody.http_status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-      setTimeout(() => this.errorLogger.log(ctx, error), 100);
+      setTimeout(() => {
+        const input: LogErrorUseCaseInput = {
+          at: new Date(),
+          ip: req.ip,
+          method: req.method,
+          origin: req.originalUrl,
+          domain: Number(req.get('domain')),
+          request_id: req.get('x-request-id'),
+          host: req.get('host'),
+          error,
+        };
+        this.errorLogger.execute(input);
+      }, 100);
     }
 
+    // Expected Error
     if (isException) {
       responseBody.message = exception.message;
       responseBody.code = exception.code;
