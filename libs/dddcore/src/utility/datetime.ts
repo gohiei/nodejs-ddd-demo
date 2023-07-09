@@ -13,6 +13,7 @@ type DateTimeUnit = Dayjs.ManipulateType;
 
 export const T_DATE = 'YYYY-MM-DD';
 export const T_DATETIME = 'YYYY-MM-DD HH:mm:ss';
+export const T_DATETIME_WITH_T = 'YYYY-MM-DDTHH:mm:ss';
 
 export class DateTime {
   private dayjs: Dayjs.Dayjs;

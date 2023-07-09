@@ -6,9 +6,9 @@ import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 
 import { loggerProviders } from './logger.provider';
 import { LoggingMiddleware } from './logger.middleware';
-import { AccessLogger } from '../../usecase/access.logger';
-import { ErrorLogger } from '../../usecase/error.logger';
-import { PostLogger } from '../../usecase/post.logger';
+import { LogAccessUseCase } from '../../usecase/log.access.usecase';
+import { LogErrorUseCase } from '../../usecase/log.error.usecase';
+import { LogPostUseCase } from '../../usecase/log.post.usecase';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { LoggerInterceptor } from './logger.interceptor';
 
@@ -28,11 +28,11 @@ import { LoggerInterceptor } from './logger.interceptor';
       useClass: LoggerInterceptor,
     },
     ...loggerProviders,
-    AccessLogger,
-    PostLogger,
-    ErrorLogger,
+    LogAccessUseCase,
+    LogPostUseCase,
+    LogErrorUseCase,
   ],
-  exports: [ErrorLogger],
+  exports: [LogErrorUseCase],
 })
 export class LoggerModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
