@@ -8,36 +8,47 @@ Domain-Driven Design + Clean Architecture for node.js
 $ npm install
 ```
 
-## Running the app
+## Development
+* Monorepo
+  * Based on `nestjs framework`
+  * Create new app: `nest generate app`
+  * Related files (after new app created)
+    * `package.json`: scripts
+    * `tsconfig.json`: paths
+    * `nest-cli.json`: projects
+
+* Run the app
 
 ```bash
 # development
-$ npm run start
+$ npm run start <app_name>
 
 # watch mode
-$ npm run start:dev
+$ npm run start:dev <app_name>
 
 # production mode
-$ npm run start:prod
+$ npm run start:prod <app_name>
 ```
 
 ## Test
 
+* see `package.json`
+
 ```bash
-# unit tests + e2e tests
+# All: unit tests + e2e tests
 $ npm run test
 
-# unit tests
+# All: unit tests
 $ npm run test:unit
 
-# e2e tests
+# One app: unit tests
+$ npm run test:unit demo
+
+# All: e2e tests
 $ npm run test:e2e
 
-# test coverage (unit tests)
-$ npm run test:unit:cov
-
-# test coverage (e2e tests)
-$ npm run test:e2e:cov
+# One app: e2e tests
+$ npm run test:e2e:demo
 ```
 
 ## Todo
