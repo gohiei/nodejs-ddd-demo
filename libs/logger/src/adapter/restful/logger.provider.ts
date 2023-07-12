@@ -7,6 +7,7 @@ import {
   ACCESS_LOGGER,
   POST_LOGGER,
   ERROR_LOGGER,
+  HTTP_REQUEST_LOGGER,
 } from '../../logger.constant';
 
 const createFactory = (name) => async (config: ConfigService) => {
@@ -42,6 +43,12 @@ export const loggerProviders = [
   {
     provide: ERROR_LOGGER,
     useFactory: createFactory('error.log'),
+    inject: [ConfigService],
+  },
+
+  {
+    provide: HTTP_REQUEST_LOGGER,
+    useFactory: createFactory('http_request.log'),
     inject: [ConfigService],
   },
 ];
