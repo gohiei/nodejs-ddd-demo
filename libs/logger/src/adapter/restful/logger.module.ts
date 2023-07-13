@@ -1,9 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { EventEmitter2EventBus } from '@lib/dddcore/adapter/event.emitter2.event.bus';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
-
 import { loggerProviders } from './logger.provider';
 import { LoggingMiddleware } from './logger.middleware';
 import { LogAccessUseCase } from '../../usecase/log.access.usecase';

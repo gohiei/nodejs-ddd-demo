@@ -1,25 +1,16 @@
 import { LoggerService } from '@nestjs/common';
-import { EventBus } from '@lib/dddcore/event.bus';
 import { DateTime } from '@lib/dddcore/utility/datetime';
 import { LogErrorUseCase, LogErrorUseCaseInput } from './log.error.usecase';
 import { Exception } from '../../../dddcore/src/error';
 
 describe('LogPost UseCase', () => {
   let logger: LoggerService;
-  let eb: EventBus;
 
   beforeEach(() => {
     logger = {
       log: jest.fn(),
       error: jest.fn(),
       warn: jest.fn(),
-    };
-
-    eb = {
-      post: jest.fn(),
-      postAll: jest.fn(),
-      register: jest.fn(),
-      unregister: jest.fn(),
     };
   });
 

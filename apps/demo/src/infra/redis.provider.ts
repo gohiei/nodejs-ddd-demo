@@ -1,9 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule, ClusterModule } from '@liaoliaots/nestjs-redis';
 
-const env = process.env.NODE_ENV || 'development';
-const isTest = env === 'test';
-
 const createRootAsync = (namespace) => {
   return RedisModule.forRootAsync({
     imports: [ConfigModule],

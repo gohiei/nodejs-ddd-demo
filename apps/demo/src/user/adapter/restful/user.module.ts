@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
-import { EventEmitter2EventBus } from '@lib/dddcore/adapter/event.emitter2.event.bus';
 import { LoggingAxiosInterceptor } from '@lib/logger/index';
 
 import { UserController } from './user.controller';

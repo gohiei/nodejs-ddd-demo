@@ -16,7 +16,7 @@ import {
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
-    private readonly errorLogger: LogErrorUseCase,
+    private readonly logErrorUseCase: LogErrorUseCase,
   ) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
@@ -51,7 +51,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           host: req.get('host'),
           error,
         };
-        this.errorLogger.execute(input);
+        this.logErrorUseCase.execute(input);
       }, 100);
     }
 

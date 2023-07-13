@@ -1,6 +1,4 @@
-import * as util from 'util';
-import { Entity } from '@lib/dddcore/entity';
-import { DateTime, T_DATETIME_WITH_T } from '@lib/dddcore/utility/datetime';
+import { DateTime } from '@lib/dddcore/utility/datetime';
 import { PostLog } from './post.log';
 
 describe('PostLog Entity', () => {
