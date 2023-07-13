@@ -2,8 +2,8 @@ import { AggregateRoot } from './aggregate.root';
 import { DomainEvent } from './domain.event';
 
 export interface EventBus {
-  post(event: DomainEvent): void;
-  postAll(ar: AggregateRoot): void;
+  post(event: DomainEvent): Promise<void>;
+  postAll(ar: AggregateRoot): Promise<void>;
   register(handler: EventHandler): void;
   unregister(handler: EventHandler): void;
 }
