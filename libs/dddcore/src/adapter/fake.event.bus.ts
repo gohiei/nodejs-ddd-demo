@@ -15,14 +15,18 @@ export class FakeEventBus implements EventBus {
     FakeEventBus._instance = this;
   }
 
-  post(event: DomainEvent): void {
+  post(event: DomainEvent): Promise<void> {
     console.log(event.getName());
+
+    return;
   }
 
-  postAll(ar: AggregateRoot): void {
+  postAll(ar: AggregateRoot): Promise<void> {
     ar.getDomainEvents().forEach((event) => {
       this.post(event);
     });
+
+    return;
   }
 
   register(handler: EventHandler): void {
