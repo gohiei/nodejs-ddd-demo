@@ -23,8 +23,8 @@ export class NotifyManagerHandler implements EventHandler {
   async when(eventName: string, event: DomainEvent): Promise<void> {
     console.log('Received: ', eventName, event.toJSON());
 
-    const data = await this.repo.getEchoData();
-    console.log('Echo: ', data);
+    // @todo removed
+    await this.repo.getEchoData();
 
     return;
   }

@@ -13,18 +13,37 @@ import {
   Payload,
 } from '../../entity/http-request-done.event';
 
+export interface LoggingAxiosInterceptorDecoder {
+  do(input: string): string;
+}
+
+export class JSONDecoder implements LoggingAxiosInterceptorDecoder {
+  do(input) {
+    return JSON.stringify(input);
+  }
+}
+
 @Injectable()
 export class LoggingAxiosInterceptor extends AxiosInterceptor {
+  private decoder: LoggingAxiosInterceptorDecoder;
+
   constructor(
     httpService: HttpService,
     @Inject(EVENT_BUS) private readonly eventBus: EventBus,
   ) {
     super(httpService);
+
+    this.decoder = new JSONDecoder();
+  }
+
+  setDecoder(decoder: LoggingAxiosInterceptorDecoder) {
+    this.decoder = decoder;
   }
 
   responseFulfilled(): AxiosFulfilledInterceptor<AxiosResponse> {
     return (response) => {
       const { config: req } = response;
+      const decoder: LoggingAxiosInterceptorDecoder = this.decoder;
 
       const log: Payload = {
         at: new Date(),
@@ -32,11 +51,11 @@ export class LoggingAxiosInterceptor extends AxiosInterceptor {
         origin: req.url,
         host: req.baseURL,
         req_header: JSON.stringify(req.headers),
-        req_body: JSON.stringify(req.data),
+        req_body: decoder.do(req.data),
         status_code: response.status,
         latency: 2,
         res_header: JSON.stringify(response.headers),
-        res_body: JSON.stringify(response.data),
+        res_body: decoder.do(response.data),
         error: undefined,
       };
 
@@ -53,6 +72,7 @@ export class LoggingAxiosInterceptor extends AxiosInterceptor {
       }
 
       const { config: req, response } = err;
+      const decoder: LoggingAxiosInterceptorDecoder = this.decoder;
 
       const log: Payload = {
         at: new Date(),
@@ -60,7 +80,7 @@ export class LoggingAxiosInterceptor extends AxiosInterceptor {
         origin: req.url,
         host: req.baseURL,
         req_header: req.headers.toString(),
-        req_body: req.data,
+        req_body: decoder.do(req.data),
         status_code: response.status,
         latency: 2,
         res_header: response.headers.toString(),
