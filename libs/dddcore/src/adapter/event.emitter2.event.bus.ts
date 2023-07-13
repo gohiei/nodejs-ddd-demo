@@ -3,15 +3,21 @@ import { AggregateRoot } from '../aggregate.root';
 import { DomainEvent } from '../domain.event';
 import { EventBus, EventHandler } from '../event.bus';
 import { Injectable } from '@nestjs/common';
-
 @Injectable()
 export class EventEmitter2EventBus implements EventBus {
+  static _instance: EventEmitter2EventBus;
   private emitter: EventEmitter2;
 
   constructor() {
+    if (EventEmitter2EventBus._instance) {
+      return EventEmitter2EventBus._instance;
+    }
+
     this.emitter = new EventEmitter2({
       wildcard: true,
     });
+
+    EventEmitter2EventBus._instance = this;
   }
 
   async post(event: DomainEvent): Promise<void> {
