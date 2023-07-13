@@ -24,10 +24,12 @@ export class EventEmitter2EventBus implements EventBus {
     await this.emitter.emitAsync(event.getName(), event);
   }
 
-  postAll(ar: AggregateRoot): Promise<void> {
-    ar.getDomainEvents().map((event) => {
-      this.post(event);
+  async postAll(ar: AggregateRoot): Promise<void> {
+    const posts = ar.getDomainEvents().map((event) => {
+      return this.post(event);
     });
+
+    await Promise.all(posts);
 
     return;
   }

@@ -21,10 +21,12 @@ export class FakeEventBus implements EventBus {
     return;
   }
 
-  postAll(ar: AggregateRoot): Promise<void> {
-    ar.getDomainEvents().forEach((event) => {
-      this.post(event);
+  async postAll(ar: AggregateRoot): Promise<void> {
+    const posts = ar.getDomainEvents().map((event) => {
+      return this.post(event);
     });
+
+    await Promise.all(posts);
 
     return;
   }
