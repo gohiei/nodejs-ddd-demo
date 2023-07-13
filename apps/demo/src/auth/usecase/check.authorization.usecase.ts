@@ -43,7 +43,7 @@ export class CheckAuthorizationUseCase implements UseCase {
     const [valid, err] = jwtToken.isValid();
 
     if (!valid) {
-      this.eventBus.postAll(jwtToken);
+      await this.eventBus.postAll(jwtToken);
       throw Exception.NewS('00001', err.message, HttpStatus.FORBIDDEN);
     }
 
