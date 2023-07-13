@@ -16,10 +16,6 @@ import { LoggerInterceptor } from './logger.interceptor';
   imports: [ConfigModule],
   providers: [
     {
-      provide: EVENT_BUS,
-      useClass: EventEmitter2EventBus,
-    },
-    {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },

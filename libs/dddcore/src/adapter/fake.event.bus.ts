@@ -5,6 +5,16 @@ import { EventBus, EventHandler } from '../event.bus';
 
 @Injectable()
 export class FakeEventBus implements EventBus {
+  static _instance: FakeEventBus;
+
+  constructor() {
+    if (FakeEventBus._instance) {
+      return FakeEventBus._instance;
+    }
+
+    FakeEventBus._instance = this;
+  }
+
   post(event: DomainEvent): void {
     console.log(event.getName());
   }
