@@ -11,6 +11,7 @@ import { LogErrorUseCase } from '../../usecase/log.error.usecase';
 import { LogPostUseCase } from '../../usecase/log.post.usecase';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { LoggerInterceptor } from './logger.interceptor';
+import { LogHTTPRequestUseCase } from '../../usecase/log.http_request.usecase';
 
 @Module({
   imports: [ConfigModule],
@@ -27,6 +28,7 @@ import { LoggerInterceptor } from './logger.interceptor';
     LogAccessUseCase,
     LogPostUseCase,
     LogErrorUseCase,
+    LogHTTPRequestUseCase,
   ],
   exports: [LogErrorUseCase],
 })
