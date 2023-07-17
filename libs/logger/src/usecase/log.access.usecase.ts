@@ -21,6 +21,8 @@ export type LogAccessUseCaseInput = {
   request_id: string;
   ip: string;
   full_path: string;
+  session_id?: string;
+  agent?: string;
 };
 
 export type LogAccessUseCaseOutput = boolean;
@@ -61,6 +63,8 @@ export class LogAccessUseCase implements EventHandler, UseCase {
       host: input.host,
       requestID: input.request_id,
       fullPath: input.full_path,
+      sessionID: input.session_id,
+      agent: input.agent,
     });
 
     this.logger.log(accessLog.toJSON());
