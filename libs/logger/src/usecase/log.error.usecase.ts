@@ -1,7 +1,10 @@
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { UseCase } from '@lib/dddcore/usecase';
+import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
+import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 import { ERROR_LOGGER } from '../logger.constant';
 import { ErrorLog } from '../entity/error.log';
+import { UnexpectedErrorRaisedEvent } from '../entity/events/unexpected-error-raised.event';
 
 export type LogErrorUseCaseInput = {
   at: Date;
@@ -11,16 +14,37 @@ export type LogErrorUseCaseInput = {
   domain: number;
   request_id: string;
   host: string;
-  error: Error;
+  req_body?: string;
+  error?: Error;
 };
 
 type LogErrorUseCaseOutput = boolean;
 
 @Injectable()
-export class LogErrorUseCase implements UseCase {
-  constructor(@Inject(ERROR_LOGGER) private readonly logger: LoggerService) {}
+export class LogErrorUseCase implements EventHandler, UseCase {
+  readonly name = 'logger.error';
+  readonly eventName = 'unexpected_error.raised';
 
-  execute(input: LogErrorUseCaseInput): LogErrorUseCaseOutput {
+  constructor(
+    @Inject(ERROR_LOGGER) private readonly logger: LoggerService,
+    @Inject(EVENT_BUS) eventBus: EventBus,
+  ) {
+    eventBus.register(this);
+  }
+
+  async when(
+    eventName: string,
+    message: UnexpectedErrorRaisedEvent,
+  ): Promise<void> {
+    const payload = message.getPayload();
+    const input: LogErrorUseCaseInput = {
+      ...payload,
+    };
+
+    await this.execute(input);
+  }
+
+  async execute(input: LogErrorUseCaseInput): Promise<LogErrorUseCaseOutput> {
     const errorLog = new ErrorLog({
       at: input.at,
       ip: input.ip,
@@ -30,9 +54,10 @@ export class LogErrorUseCase implements UseCase {
       requestID: input.request_id,
       host: input.host,
       error: input.error,
+      reqBody: input.req_body,
     });
 
-    this.logger.log(errorLog.toString());
+    this.logger.log(errorLog.toJSON());
 
     return true;
   }

@@ -46,4 +46,20 @@ export class HTTPRequestLog extends Entity {
       JSON.stringify(this.resBody),
     );
   }
+
+  toJSON() {
+    return {
+      time: new DateTime(this.at).format(T_DATETIME_WITH_T),
+      host: this.host,
+      method: this.method,
+      origin: this.origin,
+      req_headers: this.reqHeader,
+      req_body: this.reqBody,
+      status_code: this.statusCode,
+      latency: this.latency,
+      res_headers: this.resHeader,
+      res_body: this.resBody,
+      extra: {},
+    };
+  }
 }

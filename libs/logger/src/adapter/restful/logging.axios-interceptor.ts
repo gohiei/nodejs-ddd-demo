@@ -11,7 +11,7 @@ import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 import {
   HTTPRequestDoneEvent,
   Payload,
-} from '../../entity/http-request-done.event';
+} from '../../entity/events/http-request-done.event';
 
 export interface LoggingAxiosInterceptorDecoder {
   do(input: string): string;

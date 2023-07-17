@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Exception } from '@lib/dddcore/error';
+import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 import { HttpExceptionFilter } from './http-exception.filter';
-import { LogErrorUseCase } from '../../usecase/log.error.usecase';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setTimeout');
 
 describe('HttpExceptionFilter', () => {
   let service: HttpExceptionFilter;
-  const executeFn = jest.fn();
+  const postFn = jest.fn();
   const replyFn = jest.fn();
 
   beforeEach(async () => {
@@ -17,9 +17,9 @@ describe('HttpExceptionFilter', () => {
       providers: [
         HttpExceptionFilter,
         {
-          provide: LogErrorUseCase,
+          provide: EVENT_BUS,
           useValue: {
-            execute: executeFn,
+            post: postFn,
           },
         },
         {
@@ -76,7 +76,7 @@ describe('HttpExceptionFilter', () => {
 
         expect(mockHttpArgumentsHost).toBeCalledTimes(1);
         expect(replyFn).toBeCalledTimes(1);
-        expect(executeFn).toBeCalledTimes(1);
+        expect(postFn).toBeCalledTimes(1);
       });
     });
 
@@ -91,7 +91,7 @@ describe('HttpExceptionFilter', () => {
 
         expect(mockHttpArgumentsHost).toBeCalledTimes(1);
         expect(replyFn).toBeCalledTimes(1);
-        expect(executeFn).toBeCalledTimes(0);
+        expect(postFn).toBeCalledTimes(0);
       });
     });
   });

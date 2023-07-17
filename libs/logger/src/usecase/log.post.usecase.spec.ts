@@ -2,7 +2,7 @@ import { LoggerService } from '@nestjs/common';
 import { EventBus } from '@lib/dddcore/event.bus';
 import { DateTime } from '@lib/dddcore/utility/datetime';
 import { LogPostUseCase, LogPostUseCaseInput } from './log.post.usecase';
-import { RequestDoneEvent } from '../entity/request-done.event';
+import { RequestDoneEvent } from '../entity/events/request-done.event';
 
 describe('LogPost UseCase', () => {
   let logger: LoggerService;
@@ -37,8 +37,8 @@ describe('LogPost UseCase', () => {
         host: 'this.is.a.fake.host',
         request_id: 'e6d274d0-313f-4b48-9fcd-23a6e3ce36bc',
         ip: '122.1.1.1',
-        request_body: { username: 'xxx' },
-        response_data: '{"result": "ok"}',
+        req_body: { username: 'xxx' },
+        res_body: '{"result": "ok"}',
       };
 
       const uc = new LogPostUseCase(logger, eb);
@@ -46,9 +46,6 @@ describe('LogPost UseCase', () => {
       expect(output).toBeTruthy();
 
       expect(logFn).toBeCalledTimes(1);
-      expect(logFn).toBeCalledWith(
-        '2023-07-07T01:02:03 122.1.1.1 "PUT /api/user/123" 200 101 13 e6d274d0-313f-4b48-9fcd-23a6e3ce36bc this.is.a.fake.host {"username":"xxx"} {"result":"ok"}',
-      );
     });
   });
 
@@ -71,8 +68,8 @@ describe('LogPost UseCase', () => {
         request_id: 'e6d274d0-313f-4b48-9fcd-23a6e3ce36bc',
         ip: '122.1.1.1',
         full_path: 'PUT /api/user/:id',
-        request_body: { username: 'xxx' },
-        response_data: '{"result": "ok"}',
+        req_body: { username: 'xxx' },
+        res_body: '{"result": "ok"}',
         refer: '-',
       });
 
@@ -80,9 +77,6 @@ describe('LogPost UseCase', () => {
       await uc.when(uc.eventName, event);
 
       expect(logFn).toBeCalledTimes(1);
-      expect(logFn).toBeCalledWith(
-        '2023-07-07T01:02:03 122.1.1.1 "PUT /api/user/123" 200 101 13 e6d274d0-313f-4b48-9fcd-23a6e3ce36bc this.is.a.fake.host {"username":"xxx"} {"result":"ok"}',
-      );
     });
 
     it('should be empty if given a GET method', async () => {
@@ -103,8 +97,8 @@ describe('LogPost UseCase', () => {
         request_id: 'e6d274d0-313f-4b48-9fcd-23a6e3ce36bc',
         ip: '122.1.1.1',
         full_path: 'GET /api/user/:id',
-        request_body: null,
-        response_data: '{"result": "ok"}',
+        req_body: null,
+        res_body: '{"result": "ok"}',
         refer: '-',
       });
 

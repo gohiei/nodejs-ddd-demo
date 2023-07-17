@@ -12,8 +12,8 @@ export class PostLog extends Entity {
   ip: string;
   host: string;
   requestID: string;
-  requestBody: any;
-  responseData: any;
+  reqBody: any;
+  resBody: any;
 
   constructor(params: any = {}) {
     super();
@@ -27,15 +27,15 @@ export class PostLog extends Entity {
     this.ip = params?.ip || '-';
     this.host = params?.host || '-';
     this.requestID = params?.requestID || '-';
-    this.requestBody = params?.requestBody || '-';
-    this.responseData = params?.responseData || '-';
+    this.reqBody = params?.reqBody || '-';
+    this.resBody = params?.resBody || '-';
 
     this.maskPassword();
     this.parseResponseAsObject();
   }
 
   parseResponseAsObject() {
-    const data = this.responseData;
+    const data = this.resBody;
 
     if (typeof data !== 'string') {
       return;
@@ -43,14 +43,14 @@ export class PostLog extends Entity {
 
     try {
       const parsedData = JSON.parse(data);
-      this.responseData = parsedData;
+      this.resBody = parsedData;
     } catch (err) {
       return;
     }
   }
 
   maskPassword() {
-    const body = this.requestBody;
+    const body = this.reqBody;
     const maskedBody = { ...body };
 
     const maskFields = [
@@ -72,7 +72,24 @@ export class PostLog extends Entity {
       });
     }
 
-    this.requestBody = maskedBody;
+    this.reqBody = maskedBody;
+  }
+
+  toJSON() {
+    return {
+      time: new DateTime(this.at).format(T_DATETIME_WITH_T),
+      ip: this.ip,
+      method: this.method,
+      origin: this.origin,
+      status_code: this.statusCode,
+      length: this.contentLength,
+      host: this.host,
+      domain: this.domain,
+      request_id: this.requestID,
+      req_body: this.reqBody,
+      res_body: this.resBody,
+      extra: {},
+    };
   }
 
   toString() {
@@ -87,8 +104,8 @@ export class PostLog extends Entity {
       this.domain,
       this.requestID,
       this.host,
-      JSON.stringify(this.requestBody),
-      JSON.stringify(this.responseData),
+      JSON.stringify(this.reqBody),
+      JSON.stringify(this.resBody),
     );
   }
 }

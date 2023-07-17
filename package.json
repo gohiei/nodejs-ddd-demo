@@ -21,7 +21,8 @@
     "start:prod:demo": "node dist/apps/demo/main",
     "test:e2e:demo": "jest --config ./apps/demo/test/jest-e2e.json",
     "test:e2e:demo:cov": "jest --config ./apps/demo/test/jest-e2e.json --coverage",
-    "test:e2e": "npm run test:e2e:demo"
+    "test:e2e:logger": "jest --config ./libs/logger/test/jest-e2e.json",
+    "test:e2e": "npm run test:e2e:demo && npm run test:e2e:logger"
   },
   "dependencies": {
     "@liaoliaots/nestjs-redis": "^9.0.5",
