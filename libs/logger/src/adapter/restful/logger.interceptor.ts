@@ -5,8 +5,8 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UUID } from '@lib/dddcore/utility/uuid';
 import { Request, Response } from 'express';
+import { UUID } from '@lib/dddcore/utility/index';
 
 @Injectable()
 export class LoggerInterceptor implements NestInterceptor {

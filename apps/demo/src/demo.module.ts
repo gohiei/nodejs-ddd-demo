@@ -5,7 +5,7 @@ import { CreateRedisImports } from './infra/redis.provider';
 import { UserModule } from './user/adapter/restful/user.module';
 import { LoggerModule } from '@lib/logger/adapter/restful/logger.module';
 import { AuthModule } from './auth/adapter/restful/auth.module';
-import { DDDCoreModule } from '@lib/dddcore/adapter/restful/dddcore.module';
+import { DDDCoreModule } from '@lib/dddcore/index';
 
 @Module({
   imports: [

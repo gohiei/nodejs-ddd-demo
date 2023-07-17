@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpAdapterHost } from '@nestjs/core';
-import { Exception } from '@lib/dddcore/error';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { Exception, EVENT_BUS } from '@lib/dddcore/index';
 import { HttpExceptionFilter } from './http-exception.filter';
 
 jest.useFakeTimers();

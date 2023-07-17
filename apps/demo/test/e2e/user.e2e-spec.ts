@@ -1,14 +1,14 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { Redis } from 'ioredis';
+import { getRedisToken } from '@liaoliaots/nestjs-redis';
+import { DateTime } from '@lib/dddcore/utility/index';
+import { ID_REDIS_NAMESPACE } from '@app/demo/user/user.constant';
 import { UserModel } from '@app/demo/user/adapter/model/user.model';
 import {
   clearRepository,
   getTestingModule,
 } from '../utility/create-testing-module';
-import { DateTime } from '@lib/dddcore/utility/datetime';
-import { Redis } from 'ioredis';
-import { getRedisToken } from '@liaoliaots/nestjs-redis';
-import { ID_REDIS_NAMESPACE } from '@app/demo/user/user.constant';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

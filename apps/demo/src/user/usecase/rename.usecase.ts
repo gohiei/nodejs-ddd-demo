@@ -1,7 +1,7 @@
-import { Input, Output } from '@lib/dddcore/usecase';
+import { Injectable } from '@nestjs/common';
+import { Input, Output } from '@lib/dddcore/index';
 import { UserUseCase } from './user.usecase';
 import { UserDTOBuildFrom } from './dto/user.dto';
-import { Injectable } from '@nestjs/common';
 
 export interface RenameUseCaseInput extends Input {
   readonly id: string;

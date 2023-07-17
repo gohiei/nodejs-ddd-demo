@@ -1,5 +1,5 @@
-import { AggregateRoot } from '@lib/dddcore/aggregate.root';
-import { UUID } from '@lib/dddcore/utility/uuid';
+import { AggregateRoot } from '@lib/dddcore/index';
+import { UUID } from '@lib/dddcore/utility/index';
 import { UserCreatedEvent } from './events/user.created.event';
 import { UserPasswordChangedEvent } from './events/user.password.changed.event';
 import { UserRenamedEvent } from './events/user.renamed.event';

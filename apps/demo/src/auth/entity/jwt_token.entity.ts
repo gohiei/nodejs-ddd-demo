@@ -1,4 +1,4 @@
-import { AggregateRoot } from '@lib/dddcore/aggregate.root';
+import { AggregateRoot } from '@lib/dddcore/index';
 import { VerifyJwt } from '@lib/dddcore/utility/jwt';
 import { InvalidRequestOccurredEvent } from './invalid_request_occurred.event';
 

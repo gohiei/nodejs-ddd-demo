@@ -6,8 +6,7 @@ import {
   AxiosFulfilledInterceptor,
   AxiosRejectedInterceptor,
 } from '@narando/nest-axios-interceptor';
-import { EventBus } from '@lib/dddcore/event.bus';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { EventBus, EVENT_BUS } from '@lib/dddcore/index';
 import {
   HTTPRequestDoneEvent,
   Payload,

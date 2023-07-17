@@ -1,4 +1,4 @@
-import { Exception } from '@lib/dddcore/error';
+import { Exception } from '@lib/dddcore/index';
 import { PastUserPassword } from '../entity/past.user.password';
 import { User } from '../entity/user';
 import { UserPassword } from '../entity/user.password';

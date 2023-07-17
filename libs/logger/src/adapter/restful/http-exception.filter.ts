@@ -7,9 +7,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request } from 'express';
-import { Exception } from '@lib/dddcore/error';
-import { EventBus } from '@lib/dddcore/event.bus';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { Exception, EventBus, EVENT_BUS } from '@lib/dddcore/index';
 import { UnexpectedErrorRaisedEvent } from '../../entity/events/unexpected-error-raised.event';
 
 @Catch()

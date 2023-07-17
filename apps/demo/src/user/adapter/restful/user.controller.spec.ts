@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
-import { Exception } from '@lib/dddcore/error';
-import { UUID } from '@lib/dddcore/utility/uuid';
-import { DateTime } from '@lib/dddcore/utility/datetime';
+import { Exception } from '@lib/dddcore/index';
+import { UUID, DateTime } from '@lib/dddcore/utility/index';
 
 import { UserController } from './user.controller';
 import { RenameUseCase } from '../../usecase/rename.usecase';

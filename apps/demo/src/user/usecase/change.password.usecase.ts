@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Input, Output } from '@lib/dddcore/usecase';
+import { Input, Output, Exception } from '@lib/dddcore/index';
 import { UserUseCase } from './user.usecase';
-import { Exception } from '@lib/dddcore/error';
 
 export abstract class ChangePasswordUseCaseInput implements Input {
   readonly id: string;

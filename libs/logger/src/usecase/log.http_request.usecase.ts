@@ -1,6 +1,5 @@
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
-import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { EventBus, EventHandler, EVENT_BUS } from '@lib/dddcore/index';
 import { HTTP_REQUEST_LOGGER } from '../logger.constant';
 import { HTTPRequestLog } from '../entity/http_request.log';
 import {
