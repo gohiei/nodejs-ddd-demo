@@ -1,4 +1,4 @@
-import { DomainEvent } from '@lib/dddcore/domain.event';
+import { DomainEvent } from '@lib/dddcore/index';
 
 export class InvalidRequestOccurredEvent extends DomainEvent {
   private readonly ip: string;

@@ -1,4 +1,4 @@
-import { EventBus } from '@lib/dddcore/event.bus';
+import { EventBus } from '@lib/dddcore/index';
 import { UserRepository } from '../repository/user.repository';
 import {
   CreateUserUseCase,

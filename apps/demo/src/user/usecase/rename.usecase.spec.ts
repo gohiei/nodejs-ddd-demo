@@ -1,10 +1,9 @@
-import { EventBus } from '@lib/dddcore/event.bus';
-import { UUID } from '@lib/dddcore/utility/uuid';
-import { Exception } from '@lib/dddcore/error';
+import { HttpStatus } from '@nestjs/common';
+import { EventBus, Exception } from '@lib/dddcore/index';
+import { UUID } from '@lib/dddcore/utility/index';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/user.repository';
 import { RenameUseCase, RenameUseCaseInput } from './rename.usecase';
-import { HttpStatus } from '@nestjs/common';
 
 describe('Rename UseCase', () => {
   let repo: UserRepository;

@@ -1,6 +1,6 @@
 import * as util from 'util';
-import { Entity } from '@lib/dddcore/entity';
-import { DateTime } from '@lib/dddcore/utility/datetime';
+import { Entity } from '@lib/dddcore/index';
+import { DateTime } from '@lib/dddcore/utility/index';
 
 export class ErrorLog extends Entity {
   at: Date;

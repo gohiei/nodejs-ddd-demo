@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DomainEvent } from '@lib/dddcore/domain.event';
-import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import {
+  DomainEvent,
+  EventBus,
+  EventHandler,
+  EVENT_BUS,
+} from '@lib/dddcore/index';
 import { OutsideRepository } from '../../repository/outside.repository';
 import { OUTSIDE_REPOSITORY } from '../../user.constant';
 

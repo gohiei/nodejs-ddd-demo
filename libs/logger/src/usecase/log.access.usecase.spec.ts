@@ -1,6 +1,6 @@
 import { LoggerService } from '@nestjs/common';
-import { EventBus } from '@lib/dddcore/event.bus';
-import { DateTime } from '@lib/dddcore/utility/datetime';
+import { EventBus } from '@lib/dddcore/index';
+import { DateTime } from '@lib/dddcore/utility/index';
 import { LogAccessUseCase, LogAccessUseCaseInput } from './log.access.usecase';
 import { RequestDoneEvent } from '../entity/events/request-done.event';
 

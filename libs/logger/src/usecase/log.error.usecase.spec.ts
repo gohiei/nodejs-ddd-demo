@@ -1,6 +1,6 @@
 import { LoggerService } from '@nestjs/common';
-import { DateTime } from '@lib/dddcore/utility/datetime';
-import { EventBus } from '@lib/dddcore/event.bus';
+import { DateTime } from '@lib/dddcore/utility/index';
+import { EventBus } from '@lib/dddcore/index';
 import { LogErrorUseCase, LogErrorUseCaseInput } from './log.error.usecase';
 import { UnexpectedErrorRaisedEvent } from '../entity/events/unexpected-error-raised.event';
 

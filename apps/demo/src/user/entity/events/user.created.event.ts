@@ -1,4 +1,4 @@
-import { DomainEvent } from '@lib/dddcore/domain.event';
+import { DomainEvent } from '@lib/dddcore/index';
 
 export class UserCreatedEvent extends DomainEvent {
   private userId: string;

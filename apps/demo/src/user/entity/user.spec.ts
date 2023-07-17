@@ -1,4 +1,4 @@
-import { UUID } from '@lib/dddcore/utility/uuid';
+import { UUID } from '@lib/dddcore/utility/index';
 import { User } from './user';
 
 describe('User entity', () => {

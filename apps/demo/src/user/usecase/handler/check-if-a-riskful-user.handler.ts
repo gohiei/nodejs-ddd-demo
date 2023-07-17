@@ -1,8 +1,13 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
-import { DomainEvent } from '@lib/dddcore/domain.event';
-import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
-import { UseCase, Output, Input } from '@lib/dddcore/usecase';
+import {
+  EVENT_BUS,
+  DomainEvent,
+  EventBus,
+  EventHandler,
+  UseCase,
+  Output,
+  Input,
+} from '@lib/dddcore/index';
 import { UserPasswordChangedEvent } from '../../entity/events/user.password.changed.event';
 
 export abstract class CheckIfARiskfulUserUseCaseInput implements Input {

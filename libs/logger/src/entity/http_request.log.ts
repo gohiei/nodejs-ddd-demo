@@ -1,6 +1,6 @@
 import * as util from 'util';
-import { Entity } from '@lib/dddcore/entity';
-import { DateTime, T_DATETIME_WITH_T } from '@lib/dddcore/utility/datetime';
+import { Entity } from '@lib/dddcore/index';
+import { DateTime, T_DATETIME_WITH_T } from '@lib/dddcore/utility/index';
 
 export class HTTPRequestLog extends Entity {
   at: Date;

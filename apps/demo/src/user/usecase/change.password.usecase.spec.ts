@@ -1,5 +1,5 @@
-import { EventBus } from '@lib/dddcore/event.bus';
-import { DateTime } from '@lib/dddcore/utility/datetime';
+import { EventBus } from '@lib/dddcore/index';
+import { DateTime } from '@lib/dddcore/utility/index';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/user.repository';
 import {
