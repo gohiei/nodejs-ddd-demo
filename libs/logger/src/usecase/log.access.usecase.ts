@@ -3,7 +3,7 @@ import { UseCase } from '@lib/dddcore/usecase';
 import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
 import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 import { ACCESS_LOGGER } from '../logger.constant';
-import { RequestDoneEvent } from '../entity/request-done.event';
+import { RequestDoneEvent } from '../entity/events/request-done.event';
 import { AccessLog } from '../entity/access.log';
 
 export type LogAccessUseCaseInput = {
@@ -63,7 +63,7 @@ export class LogAccessUseCase implements EventHandler, UseCase {
       fullPath: input.full_path,
     });
 
-    this.logger.log(accessLog.toString());
+    this.logger.log(accessLog.toJSON());
 
     return true;
   }

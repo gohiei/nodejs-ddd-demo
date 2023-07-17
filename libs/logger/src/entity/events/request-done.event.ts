@@ -2,22 +2,24 @@ import { DomainEvent } from '@lib/dddcore/domain.event';
 
 export type Payload = {
   at: Date;
-  user_agent: string;
-  xff: string;
-  request_id: string;
-  host: string;
-  domain: number;
-  ip: string;
   method: string;
   origin: string;
   http_version: string;
-  request_body: any;
-  refer: string;
-  full_path: string;
+  user_agent: string;
+  xff: string;
   status_code: number;
   content_length: number;
   latency: number;
-  response_data: any;
+  host: string;
+  ip: string;
+  domain: number;
+  request_id: string;
+  session_id?: string;
+  full_path: string;
+  agent?: string;
+  req_body?: any;
+  refer: string;
+  res_body?: any;
 };
 
 export class RequestDoneEvent extends DomainEvent {

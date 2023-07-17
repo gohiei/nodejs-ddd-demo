@@ -19,10 +19,7 @@ const createFactory = (name) => async (config: ConfigService) => {
 
   return WinstonModule.createLogger({
     level: 'info',
-    format: Winston.format.combine(
-      Winston.format.splat(),
-      Winston.format.simple(),
-    ),
+    format: Winston.format.json(),
     transports: [new Winston.transports.File({ filename })],
   });
 };

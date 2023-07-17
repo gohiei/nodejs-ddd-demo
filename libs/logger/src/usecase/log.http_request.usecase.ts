@@ -6,7 +6,7 @@ import { HTTPRequestLog } from '../entity/http_request.log';
 import {
   HTTPRequestDoneEvent,
   Payload,
-} from '../entity/http-request-done.event';
+} from '../entity/events/http-request-done.event';
 
 export type LogHTTPRequestUseCaseInput = Payload;
 
@@ -48,7 +48,7 @@ export class LogHTTPRequestUseCase implements EventHandler {
       resBody: input.res_body,
     });
 
-    this.logger.log(log.toString());
+    this.logger.log(log.toJSON());
 
     return true;
   }

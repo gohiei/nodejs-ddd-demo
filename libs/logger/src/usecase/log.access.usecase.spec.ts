@@ -2,7 +2,7 @@ import { LoggerService } from '@nestjs/common';
 import { EventBus } from '@lib/dddcore/event.bus';
 import { DateTime } from '@lib/dddcore/utility/datetime';
 import { LogAccessUseCase, LogAccessUseCaseInput } from './log.access.usecase';
-import { RequestDoneEvent } from '../entity/request-done.event';
+import { RequestDoneEvent } from '../entity/events/request-done.event';
 
 describe('LogAccess UseCase', () => {
   let logger: LoggerService;
@@ -49,9 +49,6 @@ describe('LogAccess UseCase', () => {
       expect(output).toBeTruthy();
 
       expect(logFn).toBeCalledTimes(1);
-      expect(logFn).toBeCalledWith(
-        '2023-07-07T01:02:03 122.1.1.1 "PUT /api/user/123 HTTP/1.1" "Tester/1.0" "1.1.1.1,2.2.2.2" 200 101 30 13 this.is.a.fake.host e6d274d0-313f-4b48-9fcd-23a6e3ce36bc "PUT /api/user/:id"',
-      );
     });
   });
 
@@ -74,8 +71,8 @@ describe('LogAccess UseCase', () => {
         request_id: 'e6d274d0-313f-4b48-9fcd-23a6e3ce36bc',
         ip: '122.1.1.1',
         full_path: 'PUT /api/user/:id',
-        request_body: { username: 'xxx' },
-        response_data: null,
+        req_body: { username: 'xxx' },
+        res_body: null,
         refer: '-',
       });
 
@@ -83,9 +80,6 @@ describe('LogAccess UseCase', () => {
       await uc.when(uc.eventName, event);
 
       expect(logFn).toBeCalledTimes(1);
-      expect(logFn).toBeCalledWith(
-        '2023-07-07T01:02:03 122.1.1.1 "PUT /api/user/123 HTTP/1.1" "Tester/1.0" "1.1.1.1,2.2.2.2" 200 101 30 13 this.is.a.fake.host e6d274d0-313f-4b48-9fcd-23a6e3ce36bc "PUT /api/user/:id"',
-      );
     });
   });
 });

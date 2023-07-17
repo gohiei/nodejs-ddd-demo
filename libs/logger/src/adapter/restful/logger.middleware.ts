@@ -1,9 +1,9 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request } from 'express';
-import { ExtendedExpressResponse, getContentLength } from './express.response';
-import { RequestDoneEvent } from '../../entity/request-done.event';
 import { EventBus } from '@lib/dddcore/event.bus';
 import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { ExtendedExpressResponse, getContentLength } from './express.response';
+import { RequestDoneEvent } from '../../entity/events/request-done.event';
 
 @Injectable()
 export class LoggingMiddleware implements NestMiddleware {
@@ -41,11 +41,13 @@ export class LoggingMiddleware implements NestMiddleware {
           origin: req.originalUrl,
           http_version: req.httpVersion,
           full_path: `${req.method} ${req.route?.path}`,
-          request_body: req.body,
+          req_body: req.body,
           refer: req.get('referer'),
+          session_id: req.get('session-id'),
+          agent: req.get('x-agent'),
 
           // Response
-          response_data: res.__body_response,
+          res_body: res.__body_response,
           status_code: res.statusCode,
           content_length: getContentLength(res),
           latency,

@@ -3,20 +3,20 @@ import {
   Catch,
   ExceptionFilter,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request } from 'express';
 import { Exception } from '@lib/dddcore/error';
-import {
-  LogErrorUseCase,
-  LogErrorUseCaseInput,
-} from '../../usecase/log.error.usecase';
+import { EventBus } from '@lib/dddcore/event.bus';
+import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
+import { UnexpectedErrorRaisedEvent } from '../../entity/events/unexpected-error-raised.event';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
-    private readonly logErrorUseCase: LogErrorUseCase,
+    @Inject(EVENT_BUS) readonly eventBus: EventBus,
   ) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
@@ -28,44 +28,44 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const error = !isException ? (exception as Error) : undefined;
 
     const responseBody = {
-      http_status: HttpStatus.BAD_REQUEST,
       result: 'error',
       message: '',
-      code: '',
+      code: '-',
       request_id: req.get('x-request-id'),
+      http_status_code: HttpStatus.BAD_REQUEST,
     };
 
     // Unexpected Error
     if (error) {
       responseBody.message = error.message;
-      responseBody.http_status = HttpStatus.INTERNAL_SERVER_ERROR;
+      responseBody.http_status_code = HttpStatus.INTERNAL_SERVER_ERROR;
 
-      setTimeout(() => {
-        const input: LogErrorUseCaseInput = {
+      this.eventBus.post(
+        new UnexpectedErrorRaisedEvent({
           at: new Date(),
           ip: req.ip,
+          request_id: req.get('x-request-id'),
           method: req.method,
           origin: req.originalUrl,
           domain: Number(req.get('domain')),
-          request_id: req.get('x-request-id'),
           host: req.get('host'),
           error,
-        };
-        this.logErrorUseCase.execute(input);
-      }, 100);
+          req_body: req.body,
+        }),
+      );
     }
 
     // Expected Error
     if (isException) {
       responseBody.message = exception.message;
       responseBody.code = exception.code;
-      responseBody.http_status = exception.statusCode;
+      responseBody.http_status_code = exception.statusCode;
     }
 
     httpAdapter.reply(
       ctx.getResponse(),
       responseBody,
-      responseBody.http_status,
+      responseBody.http_status_code,
     );
   }
 }

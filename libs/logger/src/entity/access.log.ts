@@ -12,11 +12,13 @@ export class AccessLog extends Entity {
   statusCode: number;
   contentLength: number;
   latency: number;
-  domain: number;
   host: string;
-  requestID: string;
   ip: string;
+  domain: number;
+  requestID: string;
+  sessionID: string;
   fullPath: string;
+  agent: string;
 
   constructor(params: any = {}) {
     super();
@@ -30,11 +32,35 @@ export class AccessLog extends Entity {
     this.statusCode = params?.statusCode || 0;
     this.contentLength = params?.contentLength || 0;
     this.latency = params?.latency || 0;
-    this.domain = params?.domain || 0;
     this.host = params?.host || '-';
-    this.requestID = params?.requestID || '-';
     this.ip = params?.ip || '-';
+    this.domain = params?.domain || 0;
+    this.requestID = params?.requestID || '-';
+    this.sessionID = params?.sessionID || '-';
     this.fullPath = params?.fullPath || '-';
+    this.agent = params?.agent || '-';
+  }
+
+  toJSON() {
+    return {
+      time: new DateTime(this.at).format(T_DATETIME_WITH_T),
+      method: this.method,
+      origin: this.origin,
+      version: this.httpVersion,
+      user_agent: this.userAgent,
+      xff: this.xff,
+      status_code: this.statusCode,
+      length: this.contentLength,
+      latency: this.latency,
+      host: this.host,
+      ip: this.ip,
+      domain: this.domain,
+      request_id: this.requestID,
+      session_id: this.sessionID,
+      full_path: this.fullPath,
+      agent: this.agent,
+      extra: {},
+    };
   }
 
   toString(): string {

@@ -83,7 +83,7 @@ describe('UserController (e2e)', () => {
         .expect(HttpStatus.BAD_REQUEST)
         .then(({ body }) => {
           expect(body).toMatchObject({
-            http_status: 400,
+            http_status_code: 400,
             result: 'error',
             message: 'user not found',
             code: '10001',

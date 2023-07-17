@@ -1,10 +1,10 @@
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
-import { RequestDoneEvent } from '../entity/request-done.event';
 import { EventBus, EventHandler } from '@lib/dddcore/event.bus';
 import { EVENT_BUS } from '@lib/dddcore/dddcore.constant';
 import { UseCase } from '@lib/dddcore/usecase';
 import { POST_LOGGER } from '../logger.constant';
 import { PostLog } from '../entity/post.log';
+import { RequestDoneEvent } from '../entity/events/request-done.event';
 
 export type LogPostUseCaseInput = {
   at: Date;
@@ -16,8 +16,8 @@ export type LogPostUseCaseInput = {
   host: string;
   request_id: string;
   ip: string;
-  request_body: any;
-  response_data: any;
+  req_body?: any;
+  res_body?: any;
 };
 
 type LogPostUseCaseOutput = boolean;
@@ -58,11 +58,11 @@ export class LogPostUseCase implements EventHandler, UseCase {
       domain: input.domain,
       host: input.host,
       requestID: input.request_id,
-      requestBody: input.request_body,
-      responseData: input.response_data,
+      reqBody: input.req_body,
+      resBody: input.res_body,
     });
 
-    this.logger.log(postLog.toString());
+    this.logger.log(postLog.toJSON());
 
     return true;
   }
