@@ -9,9 +9,9 @@ import { LogPostUseCase } from '../../usecase/log.post.usecase';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { LoggerInterceptor } from './logger.interceptor';
 import { LogHTTPRequestUseCase } from '../../usecase/log.http_request.usecase';
+import { RealClientIP } from './real.client.ip';
 
 @Module({
-  imports: [ConfigModule],
   providers: [
     {
       provide: APP_FILTER,
@@ -26,6 +26,7 @@ import { LogHTTPRequestUseCase } from '../../usecase/log.http_request.usecase';
     LogPostUseCase,
     LogErrorUseCase,
     LogHTTPRequestUseCase,
+    RealClientIP,
   ],
   exports: [LogErrorUseCase],
 })
