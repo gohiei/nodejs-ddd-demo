@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerInterceptor } from './logger.interceptor';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
+import { RealClientIP } from './real.client.ip';
 
 describe('LoggerInterceptor', () => {
   let service: LoggerInterceptor;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [LoggerInterceptor],
+      providers: [LoggerInterceptor, RealClientIP],
     }).compile();
 
     service = module.get<LoggerInterceptor>(LoggerInterceptor);
