@@ -14,7 +14,12 @@ export class LoggerInterceptor implements NestInterceptor {
   constructor(readonly realClientIP: RealClientIP) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    this.realClientIP.parse(context);
+    const hasError = this.realClientIP.parse(context);
+
+    if (hasError) {
+      return;
+    }
+
     this.setRequestID(context);
 
     return next.handle();
