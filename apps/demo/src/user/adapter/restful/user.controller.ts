@@ -1,5 +1,5 @@
 import { Body, Controller, Param, Post, Put } from '@nestjs/common';
-import 'dotenv/config';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateUserUseCase,
   CreateUserUseCaseInput,
@@ -16,27 +16,13 @@ import {
   CheckIfARiskfulUserUseCase,
   CheckIfARiskfulUserUseCaseInput,
 } from '../../usecase/handler/check-if-a-riskful-user.handler';
+import {
+  CreateUserDto,
+  RenameUserDto,
+  ChangePasswordDto,
+} from './dto/user.dto';
 
-export class CreateUserDto {
-  readonly username: string = '';
-  readonly password: string = '';
-}
-
-export class RenameUserDto {
-  readonly username: string = '';
-}
-
-export class ChangePasswordDto {
-  readonly old_password?: string;
-  readonly new_password: string;
-  readonly confirm_password: string;
-  readonly password_reset?: boolean;
-  readonly password_expire_at: Date;
-  readonly verify?: boolean;
-  readonly is_api_domain?: boolean;
-  readonly fail0821?: boolean;
-}
-
+@ApiTags('user')
 @Controller('/api/user')
 export class UserController {
   constructor(
@@ -47,6 +33,8 @@ export class UserController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create user' })
+  @ApiResponse({ status: 200, description: 'User created' })
   async createUser(@Body() body: CreateUserDto) {
     const input: CreateUserUseCaseInput = {
       ...body,
@@ -61,6 +49,8 @@ export class UserController {
   }
 
   @Put('/:id')
+  @ApiOperation({ summary: 'Rename username' })
+  @ApiResponse({ status: 200, description: 'Username renamed' })
   async rename(@Param('id') id: string, @Body() body: RenameUserDto) {
     const input: RenameUseCaseInput = {
       id,
@@ -76,6 +66,8 @@ export class UserController {
   }
 
   @Put('/:id/password')
+  @ApiOperation({ summary: 'Change user password' })
+  @ApiResponse({ status: 200, description: 'User password changed' })
   async changePassword(
     @Param('id') id: string,
     @Body() body: ChangePasswordDto,
@@ -98,6 +90,8 @@ export class UserController {
   }
 
   @Put('/:id/check/riskful')
+  @ApiOperation({ summary: 'Check an user is riskful or not' })
+  @ApiResponse({ status: 200 })
   async checkRiskful(@Param('id') id: string) {
     const input: CheckIfARiskfulUserUseCaseInput = { id };
 
