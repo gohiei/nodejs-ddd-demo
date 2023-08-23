@@ -1,0 +1,19 @@
+version: '3'
+services:
+  node:
+    # image: gcr.io/rd5-prod-project/pineapple-micro:${VERSION:-prod}
+    build:
+      context: ../
+      dockerfile: docker-image/Dockerfile
+    container_name: nodejs-ddd-demo
+    privileged: true
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs:/usr/local/nodejs-ddd-demo/logs
+      - ./logs:/var/log/nginx
+    ulimits:
+      nproc: 65535
+      nofile: 65535
