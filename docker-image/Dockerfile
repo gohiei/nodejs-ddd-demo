@@ -1,27 +1,33 @@
-FROM node:18.17.1-alpine
+FROM node:18.17.1-alpine as builder
 
 ENV TERM xterm
 ENV TZ Asia/Taipei
 
-RUN apk update && \
-    apk --no-cache add nginx supervisor tzdata
+WORKDIR /home/node
 
-RUN rm -f /etc/nginx/conf.d/*
-
-RUN chown -R nobody:nobody /var/lib/nginx
-
-COPY supervisord.conf /etc/supervisord.conf
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY node.conf /etc/nginx/conf.d/node.conf
-
-STOPSIGNAL SIGTERM
-
-ENTRYPOINT []
-
-WORKDIR ../
+COPY tsconfig*.json ./
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+RUN npm install
+RUN npm run build demo
+
+# ---
+
+FROM node:18.17.1-alpine
+
+ENV NODE_ENV production
+
+WORKDIR /home/node
+
+COPY package*.json ./
+
+RUN npm ci --omit=dev
+
+COPY --from=builder /home/node/dist/ ./dist/
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:prod:demo"]

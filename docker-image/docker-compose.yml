@@ -2,6 +2,7 @@ version: '3'
 services:
   node:
     # image: gcr.io/rd5-prod-project/pineapple-micro:${VERSION:-prod}
+    image: mynode
     build:
       context: ../
       dockerfile: docker-image/Dockerfile
@@ -9,11 +10,15 @@ services:
     privileged: true
     restart: always
     ports:
-      - "80:80"
+      - "3000:3000"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./logs:/usr/local/nodejs-ddd-demo/logs
+      - ./logs:/home/node/dist/logs
       - ./logs:/var/log/nginx
     ulimits:
       nproc: 65535
       nofile: 65535
+    extra_hosts:
+      - "w-mysql.my:192.168.130.29"
+      - "r-mysql.my:192.168.130.29"
+      - "redis.my:192.168.130.29"
