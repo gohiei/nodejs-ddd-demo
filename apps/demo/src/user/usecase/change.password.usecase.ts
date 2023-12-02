@@ -1,6 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Input, Output, Exception } from '@lib/dddcore/index';
+import { requireTrue } from '@lib/dddcore/utility';
 import { UserUseCase } from './user.usecase';
+import {
+  DisabledPasswordUserError,
+  PasswordNotMatchError,
+  SamePasswordError,
+  SamePasswordError10,
+  WrongOldPasswordError,
+} from './errors';
 
 export abstract class ChangePasswordUseCaseInput implements Input {
   readonly id: string;
@@ -33,53 +41,36 @@ export class ChangePasswordUseCase extends UserUseCase {
       confirmPassword,
     } = input;
 
-    if (newPassword !== confirmPassword) {
-      throw Exception.New(
-        '10006',
-        'New password and confirm password are differenet',
-      );
-    }
+    requireTrue(newPassword === confirmPassword, PasswordNotMatchError);
 
     const user = await this.repo.getByID(input.id);
     const password = await this.repo.getPasswordByUser(user);
 
-    if (password.isDisabled() && !input.isFail0821) {
-      throw Exception.New(
-        '10007',
-        'DisabledPassword user cannot change password',
-      );
-    }
+    requireTrue(
+      !(password.isDisabled() && !input.isFail0821),
+      DisabledPasswordUserError,
+    );
 
     // 檢查舊密碼是否輸入正確
     if (input.oldPassword && (!password.isDisabled() || !input.isFail0821)) {
       const valid = await password.isValidPassword(oldPassword);
 
-      if (!valid) {
-        throw Exception.New('10008', 'Old password is not corrent');
-      }
+      requireTrue(valid, WrongOldPasswordError);
     }
 
     if (!user.isMember() && input.verify) {
       const same = await password.isValidPassword(newPassword);
 
-      if (same) {
-        throw Exception.New(
-          '10009',
-          'New password cannot be the same as old password',
-        );
-      }
+      requireTrue(!same, SamePasswordError);
     }
 
     await this.repo.getPastPasswordByUser(user);
 
     // @todo get entrance from sensitive logger
     if (!isApiDomain && user.isMember()) {
-      if (await user.isUsedPassword(newPassword)) {
-        throw Exception.New(
-          '10010',
-          'New password cannot be the same as old password',
-        );
-      }
+      const same = await user.isUsedPassword(newPassword);
+
+      requireTrue(!same, SamePasswordError10);
     }
 
     await user.changePassword(newPassword, passwordReset, passwordExpireAt);
