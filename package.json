@@ -17,6 +17,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
     "test:unit:cov": "jest --coverage",
+    "test:unit:cov-report": "jest --ci --json --coverage --testLocationInResults --outputFile=report.json",
     "test:unit:watch": "jest --watch",
     "start:prod:demo": "node dist/apps/demo/main",
     "test:e2e:demo": "jest --config ./apps/demo/test/jest-e2e.json",
